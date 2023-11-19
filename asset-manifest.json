@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/pol-mebel/static/css/main.08cd30dd.css",
-    "main.js": "/pol-mebel/static/js/main.9ef96e9c.js",
+    "main.css": "/pol-mebel/static/css/main.3f1cb1da.css",
+    "main.js": "/pol-mebel/static/js/main.5e84e760.js",
     "static/js/787.5fe2f8cf.chunk.js": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js",
     "index.html": "/pol-mebel/index.html",
-    "main.08cd30dd.css.map": "/pol-mebel/static/css/main.08cd30dd.css.map",
-    "main.9ef96e9c.js.map": "/pol-mebel/static/js/main.9ef96e9c.js.map",
+    "main.3f1cb1da.css.map": "/pol-mebel/static/css/main.3f1cb1da.css.map",
+    "main.5e84e760.js.map": "/pol-mebel/static/js/main.5e84e760.js.map",
     "787.5fe2f8cf.chunk.js.map": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.08cd30dd.css",
-    "static/js/main.9ef96e9c.js"
+    "static/css/main.3f1cb1da.css",
+    "static/js/main.5e84e760.js"
   ]
 }
