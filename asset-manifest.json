@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.css": "/pol-mebel/static/css/main.72623e9b.css",
-    "main.js": "/pol-mebel/static/js/main.1b87fc28.js",
+    "main.css": "/pol-mebel/static/css/main.e139cd1b.css",
+    "main.js": "/pol-mebel/static/js/main.b2587bc6.js",
     "static/js/787.5fe2f8cf.chunk.js": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js",
+    "static/media/header.jpg": "/pol-mebel/static/media/header.2ed0f91428af9ce1dd6d.jpg",
     "static/media/instagram.svg": "/pol-mebel/static/media/instagram.d583b2473e3ae7a52a4673152333aff4.svg",
     "index.html": "/pol-mebel/index.html",
     "static/media/facebook.svg": "/pol-mebel/static/media/facebook.50db5279e0c95e8e3aa60c90ad2e8fb9.svg",
-    "main.72623e9b.css.map": "/pol-mebel/static/css/main.72623e9b.css.map",
-    "main.1b87fc28.js.map": "/pol-mebel/static/js/main.1b87fc28.js.map",
+    "main.e139cd1b.css.map": "/pol-mebel/static/css/main.e139cd1b.css.map",
+    "main.b2587bc6.js.map": "/pol-mebel/static/js/main.b2587bc6.js.map",
     "787.5fe2f8cf.chunk.js.map": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.72623e9b.css",
-    "static/js/main.1b87fc28.js"
+    "static/css/main.e139cd1b.css",
+    "static/js/main.b2587bc6.js"
   ]
 }
