@@ -14,8 +14,9 @@ export const Header = () => {
     return(
         <div className="header">
         <div data-aos="fade-right" data-aos-duration="1000" className="header_text">
+          <p>Nowoczesny minimalistyczne</p>
           <h1>
-            Wprowadź Unikalność do Swojego Domu z Naszymi Meblami na Zamówienie
+            Meble
           </h1>
           <p>
             W POL-MEBEL wierzymy, że Twoje otoczenie wpływa na Twoje
@@ -24,7 +25,7 @@ export const Header = () => {
           </p>
           <div className="header_text_buttons">
           <Link to='/contact'>Skontaktuj się z Nami</Link>         
-          <Link to='/offer'>Nasze realizacje</Link> 
+          {/* <Link to='/offer'>Nasze realizacje</Link>  */}
           </div>
 
         </div>

@@ -15,7 +15,7 @@
   overflow: hidden;
   
   &_logo {
-
+    font-size: 28px;
     margin-left: 40px;
 
       img {
@@ -74,8 +74,7 @@
             a {
                 display: block;
                 padding: 20px 0;
-
-                color: $navigationItemColor;
+                color: black;
                 text-decoration: none;
                 border-bottom: 1px solid transparent;
                 transition: color 0.3s;

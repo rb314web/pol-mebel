@@ -63,12 +63,12 @@ export const Contact = () => {
       if (!emailRegex.test(email)) {
         e.target.lastChild.form[1].style.border = "1px solid red";
         error++;
-        showError(e, 1, "Nieprawidłowy adres email");
+        showError(e, 1, "Nieprawidłowy email");
       }
       if (!phoneRegex.test(phone)) {
         e.target.lastChild.form[2].style.border = "1px solid red";
         error++;
-        showError(e, 2, "Nieprawidłowy numer telefonu");
+        showError(e, 2, "Nieprawidłowy telefon");
       }
       if (subject === "") {
         e.target.lastChild.form[3].style.border = "1px solid red";

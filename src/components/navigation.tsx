@@ -23,7 +23,7 @@ export const Navigation = () => {
     <>
       <nav className="navigation">
         <div className="navigation_logo">
-          <Link to='/'><img src={mainLogo} /></Link>
+          POL-MEBEL
         </div>
 
         <ul className="navigation_list">

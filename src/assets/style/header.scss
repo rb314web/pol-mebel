@@ -31,14 +31,16 @@
         padding: 40px;
 
         h1 {
-            font-weight: 400;
-            font-size: 45px;
+            font-weight: 800;
+            color: $ctaColor;
+            font-size: 80px;
             margin-bottom: 40px;
-            color: $textPrimaryColor;
         }
 
         p {
             color:$textSecondaryColor;
+            line-height: 30px;
+            padding-right: 70px;
         }
 
         &_buttons {

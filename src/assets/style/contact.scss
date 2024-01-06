@@ -30,7 +30,8 @@
             &_input, &_textarea {
                 margin: 10px 0;
                 padding: 10px;
-                border: 1px solid #e1e1e1;
+                border: 1px solid #b9b9b9;
+                background-color: $bodyColor;
                 border-radius: 5px;
             }
 
@@ -124,6 +125,7 @@
 
         &_form {
             width: 100%;
+            padding: 15px;
         }
 
         &_info {
