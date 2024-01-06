@@ -193,7 +193,7 @@ export const Contact = () => {
               type="text"
               className="contact_form_box_input"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => {setPhone(e.target.value)}}
               name="user_phone"
             />
           </div>
