@@ -1,0 +1,56 @@
+@import "./colors.scss";
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+
+.second {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 700px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  margin-top: 50px;
+
+
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: -50px;
+    left: 0;
+    border-top: 1px solid #e1e1e1;
+    margin: 0 40px;
+    width: calc(100% - 80px);
+  }
+
+  &_photo {
+    width: 31%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 5px;
+
+    img {
+      flex-shrink: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+  }
+}
+
+
+@media screen and (max-width: 900px) {
+
+.second {
+  flex-direction: column;
+
+  &_photo {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+
+}

@@ -1,0 +1,111 @@
+@import "./colors.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Open+Sans&display=swap');
+
+
+.header {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-top: 40px;
+    font-family: 'Montserrat', sans-serif;
+    
+    &_photo {
+        width: 50%;
+        height: 500px;
+        background-image: url('../img/header.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 5px;
+        margin-right: 40px;
+
+    }
+    
+    &_text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 50%;
+        // height: 500px;
+        padding: 40px;
+
+        h1 {
+            font-weight: 400;
+            font-size: 45px;
+            margin-bottom: 40px;
+            color: $textPrimaryColor;
+        }
+
+        p {
+            color:$textSecondaryColor;
+        }
+
+        &_buttons {
+            display: flex;
+            text-transform: uppercase;
+
+            a {
+                width: 250px;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                color: white;
+                background-color: $ctaColor;
+                margin: 40px 0;
+                border: none;
+                border-radius: 5px;
+                font-weight: 800;
+                font-size: 15px;
+                margin-right: 40px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+            a:nth-child(2) {
+                background-color: white;
+                color: $ctaColor;
+                border: 1px solid $ctaColor;
+            }
+        }
+
+
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .header {
+        flex-direction: column;
+        margin-top: 0;
+
+        &_text {
+            justify-content: center;
+            width: 100%;
+            margin-left: 0;
+            text-align: center;
+            font-size: 15px;
+            padding: 20px;
+
+            &_buttons {
+                a {
+                    font-size: 12px;
+                    margin-right: 10px;
+                }
+            }
+
+            h1 {
+                font-size: 25px;
+                text-align: left;
+            }
+
+            p  {
+                text-align: left;
+            }
+        }
+
+        &_photo {
+            height: 350px;
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,124 @@
+@import "./colors.scss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Open+Sans&display=swap');
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: $navigationColor;
+  font-family: 'Montserrat', sans-serif;
+  border-bottom: 1px solid #e1e1e1;
+  overflow: hidden;
+  
+  &_logo {
+
+    margin-left: 40px;
+
+      img {
+          height: 70px;
+        }
+    }
+    
+    &_hamburger {
+        display: none;
+        position: relative;
+        height: 100%;
+        margin-right: 20px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        
+        span {
+            display: block;
+            height: 2px;
+            width: 40px;
+            background-color: #000;
+            transition: transform .5s;
+        }
+        
+        &::after,
+        &::before {
+            content: "";
+            position: absolute;
+            display: block;
+            height: 2px;
+            width: 40px;
+            top: 30px;
+            background-color: #000;
+        }
+        
+        &::after {
+            top: 48px;
+        }
+
+        &:hover > span {
+            transform: translateX(-10px);
+        }
+    }
+    
+    &_list {
+        display: flex;
+        margin-right: 40px;
+        justify-content: flex-end;
+        transition: transform 0.5s;
+        
+        &_item {
+            margin: 0 15px;
+            list-style: none;
+            text-align: center;
+            
+            a {
+                display: block;
+                padding: 20px 0;
+
+                color: $navigationItemColor;
+                text-decoration: none;
+                border-bottom: 1px solid transparent;
+                transition: color 0.3s;
+                
+                &:hover {
+                    color: $navigationItemHoverColor;
+                }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .navigation {
+    overflow: hidden;
+
+    &_list {
+      position: fixed;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      height: 100vh;
+      width: auto;
+      transform: translateX(100%);
+      right: 0;
+      top: 0;
+      margin-top: 80px;
+      margin-right: 0;
+      background-color: #fff;
+      z-index: 100000;
+
+      &_item {
+        width: 250px;
+        text-align: left;
+      }
+
+      &_active {
+        transform: translateX(0);
+      }
+    }
+
+    &_hamburger {
+      display: block;
+    }
+  }
+}

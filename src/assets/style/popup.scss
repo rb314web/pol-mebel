@@ -1,0 +1,76 @@
+@import './colors.scss';
+
+.popup {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 600px;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  padding: 80px 50px;
+  background-image: url('../img/Projekt\ bez\ nazwy.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+
+  h2 {
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+
+  p {
+    color: $textSecondaryColor;
+    line-height: 1.5;
+  }
+
+  &_buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 50px;
+
+    button {
+      width: 250px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: white;
+      background-color: $ctaColor;
+      border: none;
+      border-radius: 5px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 5px;
+      text-transform: uppercase;
+      box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+      transition: 1s;
+
+      &:nth-child(1) {
+        color: $ctaColor;
+        background-color:transparent;
+        border: 1px solid $ctaColor;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 900px) {
+
+    .popup {
+        width: 80%;
+        height: auto;
+        padding: 30px;
+        background-color: white;
+        background-image: none;
+    }
+
+}
