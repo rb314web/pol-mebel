@@ -1,24 +1,26 @@
 {
   "files": {
-    "main.css": "/pol-mebel/static/css/main.ece0a37d.css",
-    "main.js": "/pol-mebel/static/js/main.87efec67.js",
-    "static/js/981.7ac1f1f9.chunk.js": "/pol-mebel/static/js/981.7ac1f1f9.chunk.js",
+    "main.css": "/pol-mebel/static/css/main.9133206a.css",
+    "main.js": "/pol-mebel/static/js/main.6147f220.js",
     "static/js/787.5fe2f8cf.chunk.js": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js",
     "static/media/tttttjpgt.jpeg": "/pol-mebel/static/media/tttttjpgt.c3ffb0255e75b976cf85.jpeg",
     "static/media/Projekt bez nazwy.png": "/pol-mebel/static/media/Projekt bez nazwy.3cf2548a848650bd3d82.png",
     "static/media/kitchen.jpg": "/pol-mebel/static/media/kitchen.31c80464f70b4febb9fc.jpg",
     "static/media/room.jpg": "/pol-mebel/static/media/room.bf44beb113e37e6c1393.jpg",
     "static/media/kitchen-mini.jpg": "/pol-mebel/static/media/kitchen-mini.ae7e3a87fb80132a9bf2.jpg",
+    "static/media/lg.svg?io9a6k": "/pol-mebel/static/media/lg.09cd8e9be7081f216644.svg",
+    "static/media/lg.woff?io9a6k": "/pol-mebel/static/media/lg.356a0e9cb064c7a196c6.woff",
+    "static/media/lg.ttf?io9a6k": "/pol-mebel/static/media/lg.747d038541bfc6bb8ea9.ttf",
+    "static/media/lg.woff2?io9a6k": "/pol-mebel/static/media/lg.64b800aa30714fd916dc.woff2",
     "static/media/instagram.svg": "/pol-mebel/static/media/instagram.d583b2473e3ae7a52a4673152333aff4.svg",
     "index.html": "/pol-mebel/index.html",
     "static/media/facebook.svg": "/pol-mebel/static/media/facebook.50db5279e0c95e8e3aa60c90ad2e8fb9.svg",
-    "main.ece0a37d.css.map": "/pol-mebel/static/css/main.ece0a37d.css.map",
-    "main.87efec67.js.map": "/pol-mebel/static/js/main.87efec67.js.map",
-    "981.7ac1f1f9.chunk.js.map": "/pol-mebel/static/js/981.7ac1f1f9.chunk.js.map",
+    "main.9133206a.css.map": "/pol-mebel/static/css/main.9133206a.css.map",
+    "main.6147f220.js.map": "/pol-mebel/static/js/main.6147f220.js.map",
     "787.5fe2f8cf.chunk.js.map": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ece0a37d.css",
-    "static/js/main.87efec67.js"
+    "static/css/main.9133206a.css",
+    "static/js/main.6147f220.js"
   ]
 }
