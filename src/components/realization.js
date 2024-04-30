@@ -1,67 +1,82 @@
-import PhotoSwipeLightbox from "photoswipe/lightbox";
-import "photoswipe/style.css";
 import "../assets/style/realization.scss";
+import { useEffect, useState } from "react";
 
-import imgKitchenMini from "../assets/img/mini/kitchen-mini.jpg";
-import imgKitchen from "../assets/img/kitchen.jpg";
-import imgKRoomMini from "../assets/img/room.jpg";
-import imgKRoom from "../assets/img/room.jpg";
+import FsLightbox from "fslightbox-react";
 
-import { useEffect } from "react";
+import Macy from "macy";
+
+import { AsyncImage } from 'loadable-image'
+import { Blur, Grow, Slide } from 'transitions-kit'
 
 export const Realization = () => {
+  const [toggler, setToggler] = useState(false);
+
   useEffect(() => {
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: "#my-gallery",
-      children: "a",
-      pswpModule: () => import("photoswipe"),
+    require("fslightbox");
+
+    var macy = Macy({
+      container: ".realization_gallery",
+      trueOrder: false,
+      waitForImages: false,
+      margin: 24,
+      columns: 4,
+      breakAt: {
+        1200: 3,
+        940: 2,
+        520: 1,
+        400: 1,
+      },
     });
-    lightbox.init();
-  }, []);
+  });
+
+  const images = importAll(
+    require.context("../assets/img/realization", false, /\.(png|jpe?g|svg)$/)
+  );
+
+  const imagesMini = importAll(
+    require.context("../assets/img/realization/mini", false, /\.(png|jpe?g|svg)$/)
+  );
+
+  function importAll(r) {
+    console.log(r.keys().map(r));
+    return r.keys().map(r);
+  }
 
   return (
     <div className="realization">
-      <div className="realization_box">
-        <div className="realization_box_info">
-          <h2>Meble kuchenne</h2>
-          <p>
-            Dzięki precyzyjnemu rzemiosłu i starannie wybranym materiałom, nasze
-            meble zapewniają trwałość na lata. Każdy element jest starannie
-            skonstruowany, by sprostać Twoim oczekiwaniom odnośnie jakości.
-          </p>
-        </div>
-        <div id="my-gallery" className="realization_box_image">
-          <a
-            href={imgKitchen}
-            data-pswp-width="1920"
-            data-pswp-height="1080"
-            target="_blank"
-          >
-            <img src={imgKitchen} alt="" />
-          </a>
-        </div>
+      <div className="realization_hero">
+        <h1>Meble kuchenne na zamówienie</h1>
+        <p>
+          Zapraszamy do obejrzenia galerii zdjęć zrealizowanych przez nas
+          projektów kuchni. Znajdziesz tu inspiracje dla każdego stylu – od
+          klasycznych i eleganckich kuchni, po nowoczesne i minimalistyczne
+          aranżacje.
+        </p>
       </div>
 
-      <div className="realization_box">
-        <div className="realization_box_info">
-          <h2>Salon</h2>
-          <p>
-            Zapraszamy do stworzenia salonu marzeń, gdzie spotkania rodzinne
-            nabiorą nowego wymiaru, a wieczory spędzone w gronie bliskich będą
-            niezapomniane. Nasze meble to nie tylko zakup, to inwestycja w
-            wyjątkową przestrzeń domową.
-          </p>
-        </div>
-        <div id="my-gallery" className="realization_box_image">
-          <a
-            href={imgKRoom}
-            data-pswp-width="1920"
-            data-pswp-height="1080"
-            target="_blank"
-          >
-            <img src={imgKRoom} alt="" />
-          </a>
-        </div>
+      <div className="realization_gallery">
+        {images.map((imagePath, index) => (
+          <>
+          {/* <a key={imagePath} data-fslightbox="gallery" href={imagePath}>
+            <img key={imagePath} src={imagesMini[index]} alt="Zdjęcie mebli kuchennych" />
+            </a> */}
+
+            <a data-fslightbox="gallery" href={imagePath}>
+            <AsyncImage
+                    key={index}
+                    src={imagePath}
+                    style={{  borderRadius: 3 }}
+                    loader={<div style={{ background: '#888' }} />}
+                />
+        </a>
+        </>
+
+        ))}
+
+        <FsLightbox
+          toggler={toggler}
+          sources={images}
+        />
       </div>
     </div>
   );

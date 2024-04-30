@@ -1,80 +1,103 @@
 @import "./colors.scss";
 
 .realization {
-    width: 1444px;
-    margin: 40px auto;
+  margin: 0 auto;
+  max-width: 1400px;
 
-    &_box {
-        display: flex;
-        margin: 40px 0;
+  &_hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 80px;
+    padding: 100px;
+    width: 100%;
+    height: 350px;
+    background-color: #f0f0f0;
 
-        &_info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 50%;
-            padding: 40px;
+    h1 {
+      margin-bottom: 50px;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
 
-            h2 {
-                font-size: 30px;
-                margin-bottom: 50px;
-                color: $textPrimaryColor;
-                font-weight: 400;
-            }
-
-            p {
-                color: $textSecondaryColor;
-                font-weight: 200;
-                line-height: 2;
-            }
-        }
-
-        &_image {
-            width: 50%;
-            padding: 0 40px;
-
-            a {
-                img {
-                    border-radius: 5px;
-                }
-            }
-        }
-
-        &:nth-child(2n) {
-            flex-direction: row-reverse;
-        }
+      &::after {
+        display: block;
+        content: "";
+        height: 4px;
+        width: 50%;
+        transform: translateY(15px);
+        background-color: $ctaColor;
+        border-radius: 5px;
+      }
     }
 
+    p {
+      color: $textSecondaryColor;
+    }
+  }
 
-    img {
+  &_gallery {
+    position: relative;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    a {
+      img {position: relative;
+        display: block;
+        object-fit: cover;
         width: 100%;
+        height: 100%;
+        box-shadow: 0px 12px 28px 0px rgba(140, 149, 159, 0.3);
+        border-radius: 5px;
+        cursor: pointer;
+      }
     }
+  }
 }
 
 @media screen and (max-width: 900px) {
 
-    .realization {
+  .realization {
+    &_hero {
+      justify-content: center;
+      align-items: center;
 
-        width: 100%;
-
-        &_box {
-            flex-direction: column;
-            width: 100%;
-
-            &_info {
-                width: 100%;
-                padding: 20px;
-            }
-
-            &_image {
-                width: 100%;
-                padding: 20px;
-            }
-
-            &:nth-child(2n) {
-                flex-direction: column;
-            }
-        }
-
+      p {
+        text-align: center;
+      }
     }
+  }
 }
+
+.AsyncImage-root {
+
+  height: 33.3vw;
+}
+
+@media screen and (max-width: 478px) {
+
+  .realization {
+    &_hero {
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+
+      p {
+        text-align: left;
+      }
+
+      h1 {
+        text-align: left;
+      }
+    }
+  }
+
+  .AsyncImage-root {
+
+    height: 300px;
+  }
+
+}
+

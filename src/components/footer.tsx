@@ -20,9 +20,9 @@ export const Footer = () => {
             <li className="footer_wrapper_menu_item">
               <Link to="/">Strona Główna</Link>
             </li>
-            <li className="footer_wrapper_menu_item">
+            {/* <li className="footer_wrapper_menu_item">
               <Link to="/offer">Oferta</Link>
-            </li>
+            </li> */}
             <li className="footer_wrapper_menu_item">
               <Link to="realization/">Realizacje</Link>
             </li>

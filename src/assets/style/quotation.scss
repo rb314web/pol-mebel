@@ -1,0 +1,198 @@
+@import "./colors.scss";
+
+.quotation {
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 180px;
+  width: 100%;
+  font-family: "Lato", sans-serif;
+
+  &_calculator {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    &_lowerconstruction,
+    &_upperconstruction,
+    &_highconstruction,
+    &_additional {
+      width: 50%;
+      padding: 30px;
+
+      &_form {
+        padding: 30px 0;
+        display: flex;
+        flex-direction: column;
+
+        input,
+        select {
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid transparent;
+          background-color: #f7f7f7;
+          border-radius: 5px;
+        }
+
+        input[type="checkbox"] {
+          height: 30px;
+          width: 30px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    &_summary {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 100px;
+      width: 100%;
+      padding-right: 30px;
+      background-color: $ctaColor;
+      color: white;
+      font-size: 20px;
+
+      &_button {
+        background-color: white;
+        border: none;
+        border-radius: 5px;
+        color: $ctaColor;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      &_price {
+        span {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+
+  &_photo {
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    h2 {
+      position: absolute;
+      width: 100%;
+      top: 0%;
+      right: 50%;
+      transform: translate(50%, -50%);
+      font-size: 50px;
+      color: $ctaColor;
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .quotation {
+    &_calculator {
+      &_lowerconstruction,
+      &_upperconstruction,
+      &_highconstruction {
+        width: 100%;
+      }
+    }
+    &_photo {
+      h2 {
+        font-size: 30px;
+      }
+    }
+  }
+}
+
+.centered-fixed-div {
+  position: fixed;
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  padding: 30px;
+  background-color: #fff;
+  color: black;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  transition:visibility 0.2s linear,opacity 0.2s linear;
+  opacity: 0;
+
+  h3 {
+    font-size: 35px;
+  }
+
+  .test {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: rgb(255, 114, 114);
+  }
+
+  span {
+    padding: 40px 0;
+    color: $textSecondaryColor;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+  input,
+  textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid transparent;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+  }
+
+  textarea {
+    height: 80px;
+    resize: vertical;
+  }
+
+  button {
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 15px;
+    color: white;
+    background-color: $ctaColor;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+  }
+}}
+
+.centered-fixed-div-active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.centered-fixed-div-close {
+  font-size: 30px;
+  position: absolute;
+  top: 0;
+  right: 50px;
+  cursor: pointer;
+}
+
+.centered-fixed-div_button {
+  transition: .5s;
+
+}
+
+
+.centered-fixed-div_form_box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}

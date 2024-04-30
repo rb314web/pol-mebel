@@ -19,7 +19,16 @@
     "@types/react-dom": "^18.2.15",
     "aos": "^2.3.4",
     "emailjs-com": "^3.2.0",
+    "firebase": "^10.8.0",
+    "fslightbox": "^3.4.1",
+    "fslightbox-react": "^1.7.6",
     "google-map-react": "^2.2.1",
+    "lightbox.js-react": "^1.0.0",
+    "lightgallery": "^2.7.2",
+    "lightgallery.js": "^1.4.0",
+    "loadable-image": "^3.1.1",
+    "macy": "^2.5.1",
+    "nodemailer": "^6.9.10",
     "photoswipe": "^5.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,6 +36,7 @@
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
     "sass": "^1.69.5",
+    "transitions-kit": "^1.2.2",
     "typescript": "^4.9.5",
     "universal-cookie": "^7.0.0",
     "web-vitals": "^2.1.4"
@@ -61,6 +71,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/aos": "^3.0.7",
     "@types/glidejs__glide": "^3.6.5",
+    "@types/nodemailer": "^6.4.14",
     "gh-pages": "^6.1.1"
   }
 }

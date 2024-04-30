@@ -5,9 +5,11 @@ import { Footer } from "./components/footer";
 import { Realization } from "./components/realization";
 import { Offer } from "./components/offer";
 import { Contact } from "./components/contact";
+import { Quotation } from "./components/quotation";
 import React, { useEffect, useState } from "react";
 import "./App.scss";
 import Popup from "./components/popup";
+import AdminPanel from "./components/adminplanel";
 
 function App() {
   const [userTrustCookies, setUserTrustCookies] = useState(
@@ -34,6 +36,8 @@ function App() {
         <Route path="/offer" element={<Offer />} />
         <Route path="/realization" element={<Realization />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/quotation" element={<Quotation />} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
       </Routes>
 
       {userTrustCookies === null && <Popup userCookies={userCookies} />}

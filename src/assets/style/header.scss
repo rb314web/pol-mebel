@@ -3,17 +3,32 @@
 
 
 .header {
+    position: relative;
     display: flex;
+    align-items: center;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
     margin-top: 40px;
     font-family: 'Montserrat', sans-serif;
+    margin-top:120px;
+    margin-bottom: 50px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        display: block;
+        bottom: -50px;
+        left: 0;
+        border-top: 1px solid #e1e1e1;
+        margin: 0 40px;
+        width: calc(100% - 80px);
+      }
     
     &_photo {
         width: 50%;
-        height: 500px;
-        background-image: url('../img/header.jpg');
+        height: 400px;
+        background-image: url('../img/kitchen.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -33,13 +48,13 @@
         h1 {
             font-weight: 800;
             color: $ctaColor;
-            font-size: 80px;
-            margin-bottom: 40px;
+            font-size: 56px;
+            margin: 20px 0;
         }
 
         p {
             color:$textSecondaryColor;
-            line-height: 30px;
+            line-height: 25px;
             padding-right: 70px;
         }
 
@@ -56,7 +71,7 @@
                 background-color: $ctaColor;
                 margin: 40px 0;
                 border: none;
-                border-radius: 5px;
+                border-radius: $buttonRadius;
                 font-weight: 800;
                 font-size: 15px;
                 margin-right: 40px;
@@ -77,26 +92,32 @@
 
 @media screen and (max-width: 900px) {
     .header {
-        flex-direction: column;
-        margin-top: 0;
+        flex-direction: column-reverse;
+        margin-top: 80px;
+        margin-bottom: 0;
+
+        &::after {
+            bottom: 25px;
+        }
+
 
         &_text {
             justify-content: center;
             width: 100%;
             margin-left: 0;
-            text-align: center;
             font-size: 15px;
-            padding: 20px;
+            padding: 35px;
 
             &_buttons {
                 a {
                     font-size: 12px;
                     margin-right: 10px;
+                    width: 100%;
                 }
             }
 
             h1 {
-                font-size: 25px;
+                font-size: 35px;
                 text-align: left;
             }
 
@@ -106,8 +127,9 @@
         }
 
         &_photo {
-            height: 350px;
+            height: 200px;
             width: 100%;
+            border-radius: 0;
         }
     }
 }

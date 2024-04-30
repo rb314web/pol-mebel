@@ -1,0 +1,139 @@
+@import 'colors.scss';
+
+.adminpanel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;    margin-top: 100px;
+
+    &_panel {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        margin-top: 80px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+
+            label {
+                font-weight: bold;
+                margin-bottom: 20px;
+                font-size: 20px;
+            }
+
+            button {
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                color: white;
+                background-color: #365956;
+                margin: 20px 0;
+                border: none;
+                border-radius: 5px;
+                font-weight: 800;
+                font-size: 15px;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+            input {
+                margin: 10px 0;
+                padding: 10px;
+                border: 1px solid transparent;
+                background-color: #f7f7f7;
+            }
+
+        }
+
+    }
+
+    &_login {
+        display: flex;
+        flex-direction: column;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+
+            input {
+                margin: 10px 0;
+                padding: 10px;
+                border: 1px solid transparent;
+                background-color: #f7f7f7;
+            }
+
+            input[type=submit] {
+                cursor: pointer;
+            }
+        }
+
+
+    }
+
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+    width: 40vw;
+
+    h1{
+        text-transform: capitalize;
+        padding: 20px 0;
+    }
+
+    &_item {
+        display: flex;
+        flex-direction: column;
+
+        padding: 20px 0;
+        border-bottom: 1px solid #cccccc;
+
+        label {
+            text-transform: capitalize;
+        }
+
+        input {
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid transparent;
+          background-color: #f7f7f7;
+          border-radius: 5px;
+        }
+
+        button {
+            display: flex;
+            align-self: stretch;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 15px;
+            color: white;
+            background-color: $ctaColor;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: 1s;
+          }
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .adminpanel {
+        &_panel {
+          flex-direction: column;  
+        }
+    }
+
+    .section {
+     width: 80vw;    
+    }
+
+}
