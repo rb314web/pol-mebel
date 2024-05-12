@@ -17,15 +17,19 @@ export const Contact = () => {
     // Wyłączenie domyślnego odświeżania strony
     e.preventDefault();
 
-    const showError = (element: any, id: number, test: string) => {
+    const showError = (element: any, id: number, text: string) => {
 
+      // Tworzę element span
       const span = document.createElement("span");
 
+      // Dodaję do stworzonego elementu spam klasę test
       span.classList.add("test");
 
-      span.innerText = test;
+      // Dodaję do elementu zawartość z podaną w parametrach 
+      span.innerText = text;
 
-      e.target[id].parentElement.insertBefore(span);
+      // Dodaję delement na stronę
+      e.target[id].parentElement.append(span);
     };
 
     // Funkcja sprawdzająca poprwanośc wypełnienia formularza
