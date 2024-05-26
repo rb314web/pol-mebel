@@ -1,16 +1,11 @@
-import {
-  collection,
-  onSnapshot,
-  query,
-} from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { createElement, useEffect, useRef, useState } from "react";
 import "../assets/style/quotation.scss";
 import { db } from "../firebase";
 
 import emailjs from "emailjs-com";
 
 export const Quotation = () => {
-
   interface formData {
     ogólne: {
       "Wysokosc pomieszczenia ( w centymetrach )": number;
@@ -50,11 +45,12 @@ export const Quotation = () => {
     };
   }
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [message, setMessage] = useState("");
   const [database, setDatabase] = useState<object[]>();
+  const [summaryPrice, setSummaryPrice] = useState<number>(0)
 
   const [formData, setFormData] = useState<formData>({
     ogólne: {
@@ -95,7 +91,11 @@ export const Quotation = () => {
     },
   });
 
-  // Pobieranie cen z bazy danych 
+  useEffect(() => {
+    calculatePrice()
+  },[formData])
+
+  // Pobieranie cen z bazy danych
 
   useEffect(() => {
     const priceRef = collection(db, "database");
@@ -106,7 +106,7 @@ export const Quotation = () => {
       snapshot.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id });
       });
-      console.log(data)
+      console.log(data);
       setDatabase(data);
     });
 
@@ -132,79 +132,79 @@ export const Quotation = () => {
     fixDiv?.classList.remove("centered-fixed-div-active");
   };
 
-  const sendForm = (e: any) => {
-    e.preventDefault();
+  // const sendForm = (e: any) => {
+  //   e.preventDefault();
 
-    const showError = (element: any, id: number, test: string) => {
-      const span = document.createElement("span");
+  //   const showError = (element: any, id: number, test: string) => {
+  //     const span = document.createElement("span");
 
-      span.classList.add("test");
+  //     span.classList.add("test");
 
-      span.innerText = test;
+  //     span.innerText = test;
 
-      e.target.parentNode.children[id].append(span);
-      // alert("sss");
-      console.log(e);
-    };
+  //     e.target.parentNode.children[id].append(span);
+  //     // alert("sss");
+  //     console.log(e);
+  //   };
 
-    // Funkcja sprawdzająca poprwanośc wypełnienia formularza
-    const validateForm = (e: any) => {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,6}$/;
-      const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
+  //   // Funkcja sprawdzająca poprwanośc wypełnienia formularza
+  //   const validateForm = (e: any) => {
+  //     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,6}$/;
+  //     const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
 
-      let error = 0;
+  //     let error = 0;
 
-      // Usuwam informację o błędzie jesli takie są
-      document.querySelectorAll(".test").forEach((item) => {
-        item.remove();
-      });
+  //     // Usuwam informację o błędzie jesli takie są
+  //     document.querySelectorAll(".test").forEach((item) => {
+  //       item.remove();
+  //     });
 
-      // Sprawdzam poprawność wypełnienia i zgodności wpisanych danych
-      if (!name) {
-        // e.target.lastChild.form[0].style.border = "1px solid red";
-        error++;
-        showError(e, 0, "Pole jest wymagane");
-      }
-      if (!emailRegex.test(email)) {
-        // e.target.lastChild.form[1].style.border = "1px solid red";
-        error++;
-        showError(e, 1, "Nieprawidłowy email");
-      }
-      if (!phoneRegex.test(phone)) {
-        // e.target.lastChild.form[2].style.border = "1px solid red";
-        error++;
-        showError(e, 2, "Nieprawidłowy telefon");
-      }
+  //     // Sprawdzam poprawność wypełnienia i zgodności wpisanych danych
+  //     if (!name) {
+  //       // e.target.lastChild.form[0].style.border = "1px solid red";
+  //       error++;
+  //       showError(e, 0, "Pole jest wymagane");
+  //     }
+  //     if (!emailRegex.test(email)) {
+  //       // e.target.lastChild.form[1].style.border = "1px solid red";
+  //       error++;
+  //       showError(e, 1, "Nieprawidłowy email");
+  //     }
+  //     if (!phoneRegex.test(phone)) {
+  //       // e.target.lastChild.form[2].style.border = "1px solid red";
+  //       error++;
+  //       showError(e, 2, "Nieprawidłowy telefon");
+  //     }
 
-      // Zwracam czy licznik błędów jest wiekszy od zera
-      return error === 0 ? true : false;
-    };
+  //     // Zwracam czy licznik błędów jest wiekszy od zera
+  //     return error === 0 ? true : false;
+  //   };
 
-    if (validateForm(e)) {
-      const sendButton = document.querySelector(
-        ".centered-fixed-div_button"
-      ) as HTMLElement;
+  //   if (validateForm(e)) {
+  //     const sendButton = document.querySelector(
+  //       ".centered-fixed-div_button"
+  //     ) as HTMLElement;
 
-      sendButton.style.backgroundColor = "silver";
-      sendButton.innerText = ".................";
+  //     sendButton.style.backgroundColor = "silver";
+  //     sendButton.innerText = ".................";
 
-      emailjs
-        .sendForm(
-          "service_tp2r4tc",
-          "template_63cwz16",
-          "xxxx",
-          "uoa8cmJT5xHCmLk4H"
-        )
-        .then(
-          (result) => {
-            showResault("successful");
-          },
-          (error) => {
-            showResault("error");
-          }
-        );
-    }
-  };
+  //     emailjs
+  //       .sendForm(
+  //         "service_tp2r4tc",
+  //         "template_63cwz16",
+  //         "xxxx",
+  //         "uoa8cmJT5xHCmLk4H"
+  //       )
+  //       .then(
+  //         (result) => {
+  //           showResault("successful");
+  //         },
+  //         (error) => {
+  //           showResault("error");
+  //         }
+  //       );
+  //   }
+  // };
 
   // Funkcaj wyświetla wynik wysyłania formularza
   const showResault = (typeResault: string) => {
@@ -231,354 +231,472 @@ export const Quotation = () => {
 
   const calculatePrice = () => {
 
-    // *** MONTAZ ***
+    const findObjectR: any = database?.find(
+      (obj: any) => obj.id === "robocizna"
+    );
+
+    const findObjectA: any = database?.find(
+      (obj: any) => obj.id === "akcesoria"
+    );
+
+    const findObjectB: any = database?.find((obj: any) => obj.id === "blaty");
+
+    const findObjectO: any = database?.find(
+      (obj: any) => obj.id === "obrzeze"
+    );
+
+    const findObjectF: any = database?.find(
+      (obj: any) => obj.id === "fronty"
+    );
+
+    const findObjectP: any = database?.find((obj: any) => obj.id === "plyty");
+
+
+    // *** MONTAZ *** ok
 
     const installation = () => {
 
-      // Szukam obiektu danych z ceną za robocizne
-      const findObjectR: any = database?.find((obj: any) => obj.id === "robocizna");
       // Sprawdzam czy uzytkownik wybrał opcję montazu
-      const userInstallation = formData.transportMontaz["Opcja montażu"]
+      const userInstallation = formData.transportMontaz["Opcja montażu"];
       // Zapisuje cene montazu
-      const priceInstallation = findObjectR?.['montaz']
+      const priceInstallation = findObjectR?.["montaz"];
 
-      // Zwracam cenę jezeli uzytkownik wybrał opcję montazu, jezeli nie zwracam 0 
-      return userInstallation ? priceInstallation : 0
-    }
+      // Zwracam cenę jezeli uzytkownik wybrał opcję montazu, jezeli nie zwracam 0
+      return userInstallation ? priceInstallation : 0;
+    };
 
-    // *** TRANSPORT ***
+    // *** TRANSPORT *** ok
 
     const transport = () => {
 
-      // Szukam obiektu danych z ceną za robocizne
-      const findObjectR: any = database?.find((obj: any) => obj.id === "robocizna");
       // Zapisuje cenę za transportu
-      const priceTransport: number = Number(findObjectR?.transport)
-      // Pobieram odległośc wpisaną przez uzytkownika 
-      const userInputTransport = formData.transportMontaz["Odległość w km"]
+      const priceTransport: number = Number(findObjectR?.transport);
+      // Pobieram odległośc wpisaną przez uzytkownika
+      const userInputTransport = formData.transportMontaz["Odległość w km"];
 
       // Zwracam obliczoną cenę za transport
-      return userInputTransport === 0 ? 0 : userInputTransport * priceTransport
-    }
+      return userInputTransport === 0 ? 0 : userInputTransport * priceTransport;
+    };
 
-    // *** NOZKI ***
+    // *** NOZKI *** ok
 
     const legs = () => {
 
-      // Szukam obiektu danych z ceną za akcesoria
-      const findObjectA: any = database?.find((obj: any) => obj.id === "akcesoria");
       // Zapisuje cenę za nózek
-      const priceLegs = Number(findObjectA?.nozka)
+      const priceLegs = Number(findObjectA?.nozka);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
-      const userBuildLowerCabinet = formData.zabudowaDolna["Ilość szafek"]
+      const userBuildLowerCabinet = formData.zabudowaDolna["Ilość szafek"];
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie wysokiej
-      const userBuildHighCabinet = formData.zabudowaWysoka["Ilość szafek"]
+      const userBuildHighCabinet = formData.zabudowaWysoka["Ilość szafek"];
 
-      // Zwracam cenę za nózki 
-      return ((userBuildLowerCabinet + userBuildHighCabinet) * 4) * priceLegs
-    }
+      // Zwracam cenę za nózki
+      return findObjectA
+        ? (userBuildLowerCabinet + userBuildHighCabinet) * 4 * priceLegs
+        : 0;
+    };
 
-    // *** ZAWIASY ***
+    // *** ZAWIASY *** ok
 
     const cabinets = () => {
 
-      // Szukam obiektu danych z ceną za akcesoria
-      const findObjectA: any = database?.find((obj: any) => obj.id === "akcesoria");
       // Zapisuje cenę za zawiasu
-      const priceHinges = Number(findObjectA?.zawias)
+      const priceHinges = Number(findObjectA?.zawias);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
-      const userBuildLowerCabinets = formData.zabudowaDolna["Ilość szafek"]
+      const userBuildLowerCabinets = formData.zabudowaDolna["Ilość szafek"];
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie górnej
-      const userBuildHihghCabinets = formData.zabudowaGorna["Ilość szafek"]
+      const userBuildHihghCabinets = formData.zabudowaGorna["Ilość szafek"];
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie wysokiej
-      const userBuildUpperCabinets = formData.zabudowaWysoka["Ilość szafek"]
+      const userBuildUpperCabinets = formData.zabudowaWysoka["Ilość szafek"];
 
       // Obliczam i zwracam cene za zawiasy
-      return ((userBuildLowerCabinets + userBuildHihghCabinets + (userBuildUpperCabinets * 2)) * 2) * priceHinges
-    }
+      return findObjectA
+        ? (userBuildLowerCabinets +
+            userBuildHihghCabinets +
+            userBuildUpperCabinets * 2) *
+            2 *
+            priceHinges
+        : 0;
+    };
 
+    // *** OŚWIETLENIE LED *** ok
     const lightLed = () => {
-      // Szukam objektu z id 'robocizna' w bazie 
-      const findObjectR: any = database?.find((obj: any) => obj.id === "robocizna");
-      // Szukam objektu z id 'akcesoria' w bazie 
-      const findObjectA: any = database?.find((obj: any) => obj.id === "akcesoria");
+
       // Pobieram cene za klejenie LED
-      const priceGluingLed = Number(findObjectR?.["klejenie led"])
+      const priceGluingLed = Number(findObjectR?.["klejenie led"]);
       // Pobieram cene za taśme LED
-      const priceLedStrip = Number(findObjectA?.["tasma led"])
+      const priceLedStrip = Number(findObjectA?.["tasma led"]);
       // Pobieram cene za profil LED
-      const priceProfil = Number(findObjectA?.["profil led"])
+      const priceProfil = Number(findObjectA?.["profil led"]);
       // Pobieram cene za zasilacz LED
-      const pricePowerSupply = Number(findObjectA?.["zasilacz led"])
+      const pricePowerSupply = Number(findObjectA?.["zasilacz led"]);
       // Pobieram cene za włącznik LED
-      const priceLedSwitch = Number(findObjectA?.["wlacznik led"])
+      const priceLedSwitch = Number(findObjectA?.["wlacznik led"]);
       // Pobieram wartość boolen czy został zaznaczony checkbox 'Oświtlenie LED'
-      const userSelectLightLed = formData.zabudowaGorna["Oświtlenie LED"]
+      const userSelectLightLed = formData.zabudowaGorna["Oświtlenie LED"];
       // Pobieram długość zabudowy podanej przez uzytkownika
-      const userInputConstructionLength = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
-      
+      const userInputConstructionLength =
+        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+
       // Obliczam i zwracam cenę za oświtlenie LED, jezeli uzytkownik nie wybrał to zwracam 0 i jezeli brak długości zabudowy zwracam 0
-      return userSelectLightLed && userInputConstructionLength != 0 ? (userInputConstructionLength / 100 ) * (priceGluingLed + priceProfil + priceLedStrip) + pricePowerSupply + priceLedSwitch : 0
+      return userSelectLightLed && userInputConstructionLength != 0
+        ? (userInputConstructionLength / 100) *
+            (priceGluingLed + priceProfil + priceLedStrip) +
+            pricePowerSupply +
+            priceLedSwitch
+        : 0;
+    };
 
-    }
-
-    // *** CARGO WYSOKIE ***
+    // *** CARGO WYSOKIE *** ok
 
     const highCargo = () => {
-
       // Pobieram czy uzytkownik wybrał opcje wysokiego cargo
-      const userSelectHightCargo = formData.zabudowaWysoka["Cargo wysokie"]
-      // Szukam objektu z id 'akcesoria' w bazie 
-      const findObjectA: any = database?.find((obj: any) => obj.id === "akcesoria");
+      const userSelectHightCargo = formData.zabudowaWysoka["Cargo wysokie"];
+
       // Pobieram cene za profil LED
-      const priceProfil = Number(findObjectA?.["cargo wysokie"])
+      const priceProfil = Number(findObjectA?.["cargo wysokie"]);
 
       // Zwracam cenę wysokiego cargo
-      return userSelectHightCargo ? priceProfil : 0
-    }
+      return userSelectHightCargo ? priceProfil : 0;
+    };
 
-    // *** CARGO NISKIE ***
+    // *** CARGO NISKIE *** ok
 
     const lowCargo = () => {
-
       // Pobieram czy uzytkownik wybrał opcje niskiego cargo
-      const userSelectHightCargo = formData.zabudowaDolna["Cargo nieskie"]
-      // Szukam objektu z id 'akcesoria' w bazie 
-      const findObjectA: any = database?.find((obj: any) => obj.id === "akcesoria");
+      const userSelectHightCargo = formData.zabudowaDolna["Cargo nieskie"];
+      // Szukam objektu z id 'akcesoria' w bazie
+
       // Pobieram cene za profil LED
-      const priceProfil = Number(findObjectA?.["cargo niskie"])
+      const priceProfil = Number(findObjectA?.["cargo niskie"]);
 
       // Zwracam cenę niskiego cargo
-      return userSelectHightCargo ? priceProfil : 0
-    }
+      return userSelectHightCargo ? priceProfil : 0;
+    };
 
-    // *** SZUFLADY ***
+    // *** SZUFLADY *** ok
 
     const drawers = () => {
 
-      // Szukam objektu z id 'akcesoria' w bazie 
-      const findObjectA: any = database?.find((obj: any) => obj.id === "akcesoria");
       // Pobieram cenę szuflady
-      const priceDrawers = Number(findObjectA?.["szuflada"])
+      const priceDrawers = Number(findObjectA?.["szuflada"]);
       // Pobieram podaną przez uzytkownika ilość szuflad w zabudowie wysokiej
-      const userInputConstructionLength = formData.zabudowaWysoka["Ilość szufled"]
+      const userInputConstructionLength =
+        formData.zabudowaWysoka["Ilość szufled"];
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
-      const userInputConstructionLength1 = formData.zabudowaDolna["Ilość szuflad"]
+      const userInputConstructionLength1 =
+        formData.zabudowaDolna["Ilość szuflad"];
 
       // Zwracam cenę za szuflady
-        return (userInputConstructionLength + userInputConstructionLength1) * priceDrawers
-    }
+      return findObjectA
+        ? (userInputConstructionLength + userInputConstructionLength1) *
+            priceDrawers
+        : 0;
+    };
 
-    // *** BLAT ***
+    // *** BLAT *** ok
 
     const countertop = () => {
-      // Szukam objektu 'blaty' z cenami 
-      const findObjectA: any = database?.find((obj: any) => obj.id === "blaty");
-      // Pobieram jaki rodzaj blatu wybrał uzytkownik 
-      const userInputCountertopType = formData.zabudowaDolna["Rodzaj blatu"].toLowerCase()
+ 
+      // Pobieram jaki rodzaj blatu wybrał uzytkownik
+      const userInputCountertopType =
+        formData.zabudowaDolna["Rodzaj blatu"].toLowerCase();
       // Pobieram cene blatu wybranego przez uzytkownika
-      const priceCountertop = userInputCountertopType && findObjectA[userInputCountertopType]
+      const priceCountertop =
+        userInputCountertopType && findObjectB[userInputCountertopType];
       // Pobieram długość blatu
-      const userInputConstructionLength = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
+      const userInputConstructionLength =
+        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
 
       // Obliczam i zwracam cenę blatu
-      return (userInputConstructionLength / 100) * priceCountertop
-    }
+      return (userInputConstructionLength / 100) * priceCountertop;
+    };
 
-    // *** OBRZEZA ***
+    // *** OBRZEZA ok optymalizacja***
 
     const circumcision = () => {
-
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie dolnej
-      const userBuildLowerLenght = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
-      const userBuildLowerCabinets = formData.zabudowaDolna["Ilość szafek"]
+      const userBuildLowerLenght =
+        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+      const userBuildLowerCabinets = formData.zabudowaDolna["Ilość szafek"];
       // Oblicam sume obrzezy w zabudowie dolnej
-      const circumcisionBuildLower = (userBuildLowerLenght * 3 + 2 * userBuildLowerCabinets * 72 )/ 100
+      const circumcisionBuildLower =
+        (userBuildLowerLenght * 3 + 2 * userBuildLowerCabinets * 72) / 100;
 
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie górnej
-      const userBuildHeightLength = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
-      const userBuildHeightHeight = formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]
-      const userBuildHeightCabinets = formData.zabudowaGorna["Ilość szafek"]
-      const userInputConstructionLength44 =  Math.floor(userBuildHeightHeight /30);
+      const userBuildHeightLength =
+        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+      const userBuildHeightHeight =
+        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
+      const userBuildHeightCabinets = formData.zabudowaGorna["Ilość szafek"];
+      const userInputConstructionLength44 = Math.floor(
+        userBuildHeightHeight / 30
+      );
       // Oblicam sume obrzezy w zabudowie górnej
-      const circumcisionBuildHight = (userBuildHeightLength * (2 + userInputConstructionLength44) + userBuildHeightHeight * userBuildHeightCabinets * 2) / 100
+      const circumcisionBuildHight =
+        (userBuildHeightLength * (2 + userInputConstructionLength44) +
+          userBuildHeightHeight * userBuildHeightCabinets * 2) /
+        100;
 
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie wysokiej
-      const userBuildUpperLenght = formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]
-      const userBuildUpperHeight = formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]
-      const userBuildUpperCabinets = formData.zabudowaWysoka["Ilość szafek"]
+      const userBuildUpperLenght =
+        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+      const userBuildUpperHeight =
+        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
+      const userBuildUpperCabinets = formData.zabudowaWysoka["Ilość szafek"];
       // Oblicam sume obrzezy w zabudowie wysokiej
-      const circumcisionBuildUpper = (userBuildUpperLenght * 7 + userBuildUpperHeight *  userBuildUpperCabinets * 2) / 100
+      const circumcisionBuildUpper =
+        (userBuildUpperLenght * 7 +
+          userBuildUpperHeight * userBuildUpperCabinets * 2) /
+        100;
 
       // Obliczam i zwracam łączną ilość obrzeza [MB]
-      const circumcisionSummary = (circumcisionBuildLower + circumcisionBuildHight + circumcisionBuildUpper) * 1.2
-
-      // Pobieram cenę obrzeza za [MB]
-            // Szukam objektu z id 'akcesoria' w bazie 
-            const findObjectA: any = database?.find((obj: any) => obj.id === "obrzeze");
-            
-            // Pobieram typy obrzeza 
-            const dsf = findObjectA && findObjectA["drewniane"]
-            const ddsf = findObjectA && findObjectA["korpusowa biala"]
-
-            const userBuildUpperCadfsgbinets = formData.ogólne["Rodzaj płyty na korpus szafek"].toLowerCase()
-
-            const fedwf = findObjectA && findObjectA[userBuildUpperCadfsgbinets]
+      const circumcisionSummary =
+        (circumcisionBuildLower +
+          circumcisionBuildHight +
+          circumcisionBuildUpper) *
+        1.2;
 
 
 
+      // Pobieram typy obrzeza
+      const dsf = findObjectO && findObjectO["drewniane"];
+      const ddsf = findObjectO && findObjectO["korpusowa biala"];
 
-            // const userBsduildHeightLength = formData.
+      const userBuildUpperCadfsgbinets =
+        formData.ogólne["Rodzaj płyty na korpus szafek"].toLowerCase();
 
+      const fedwf = findObjectO && findObjectO[userBuildUpperCadfsgbinets];
 
-      return (circumcisionSummary * fedwf).toFixed(2)
-    }
+      // const userBsduildHeightLength = formData.
 
-    // *** FRONTY WYSOKIE ** 
+      return circumcisionSummary > 0 && userBuildUpperCadfsgbinets
+        ? Math.round(circumcisionSummary * fedwf * 100) / 100
+        : 0;
+    };
+
+    // *** FRONTY WYSOKIE ok **
 
     const frontsHigh = () => {
-
       // Pobieram dane wprowadzone przez uzytkownika
-      const userBuildHeightLength = formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]
-      const userBuildHeightHeight = formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]
-      const userBuildHeightFrontsType = formData.zabudowaWysoka["Rodzaj frontów"].toLowerCase()
+      const userBuildHeightLength =
+        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+      const userBuildHeightHeight =
+        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
+      const userBuildHeightFrontsType =
+        formData.zabudowaWysoka["Rodzaj frontów"].toLowerCase();
 
       // Powieszchnia frontów wysokich
-      const surfaceFrontsHigh = userBuildHeightLength * (userBuildHeightHeight -10)/10000
+      const surfaceFrontsHigh =
+        (userBuildHeightLength * (userBuildHeightHeight - 10)) / 10000;
 
-      // Pobieram objekt z id fronty w celu uzyskania ceny
-      const findObjectF: any = database?.find((obj: any) => obj.id === "fronty");
 
       // Pobieranie ceny wybranej opcji frontów
-      const priceSelectSurface = userBuildHeightFrontsType != '' ? findObjectF?.[userBuildHeightFrontsType] : 0
+      const priceSelectSurface =
+        userBuildHeightFrontsType != ""
+          ? findObjectF?.[userBuildHeightFrontsType]
+          : 0;
 
       // Obliczam i zwracam cenę za fronty wysokie
-      return Math.floor(surfaceFrontsHigh * priceSelectSurface * 100) / 100
-    }
+      return surfaceFrontsHigh > 0
+        ? Math.floor(surfaceFrontsHigh * priceSelectSurface * 100) / 100
+        : 0;
+    };
 
-    // *** PŁYTA KORPUSOWA ***
+    // *** PŁYTA KORPUSOWA *** ok optymalizacja
 
     const bodyPlate = () => {
-
-      // Pobieram dane wprowadzone przez uzytkownika 
-      const userBuildLowerLength: number = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
-      const userBuildLowerCabinet: number = formData.zabudowaDolna["Ilość szafek"]
-      const userBuildUpperLength: number = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
-      const userBuildUpperCabinet: number = formData.zabudowaGorna["Ilość szafek"]
-      const userBuildUpperHeight: number = formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]
-      const userBuildHighLength: number = formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]
-      const userBuildHighHeight: number = formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]
-      const userBuildHighCabinet: number = formData.zabudowaWysoka["Ilość szafek"]
+      // Pobieram dane wprowadzone przez uzytkownika
+      const userBuildLowerLength: number =
+        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+      const userBuildLowerCabinet: number =
+        formData.zabudowaDolna["Ilość szafek"];
+      const userBuildUpperLength: number =
+        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+      const userBuildUpperCabinet: number =
+        formData.zabudowaGorna["Ilość szafek"];
+      const userBuildUpperHeight: number =
+        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
+      const userBuildHighLength: number =
+        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+      const userBuildHighHeight: number =
+        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
+      const userBuildHighCabinet: number =
+        formData.zabudowaWysoka["Ilość szafek"];
 
       // Ilość płyty zabudowa dolna [MB]
-      const plateQuantityBuildLower: number = (userBuildLowerLength * 100 + 2 * userBuildLowerCabinet * 72 *51) / 10000
+      const plateQuantityBuildLower: number =
+        (userBuildLowerLength * 100 + 2 * userBuildLowerCabinet * 72 * 51) /
+        10000;
 
       // Ilość płyty zabudowa górna [MB]
-      const shelfQuantityBuildUpper: number =  Math.floor(userBuildUpperHeight / 30)
+      const shelfQuantityBuildUpper: number = Math.floor(
+        userBuildUpperHeight / 30
+      );
 
-      const plateQuantityBuildUpper: number = (userBuildUpperLength * (58 + shelfQuantityBuildUpper * 27) + userBuildUpperCabinet *2 *  userBuildUpperHeight * 30 ) / 10000
+      const plateQuantityBuildUpper: number =
+        (userBuildUpperLength * (58 + shelfQuantityBuildUpper * 27) +
+          userBuildUpperCabinet * 2 * userBuildUpperHeight * 30) /
+        10000;
 
       // Ilość płyty zabudowa wysoka
-       const plateQuantityBuildHeight: number = (userBuildHighLength * 350 + userBuildHighHeight * userBuildHighCabinet *2) / 10000
+      const plateQuantityBuildHeight: number =
+        (userBuildHighLength * 350 +
+          userBuildHighHeight * userBuildHighCabinet * 2) /
+        10000;
 
-            // Pobieram cenę obrzeza za [MB]
-            // Szukam objektu z id 'akcesoria' w bazie 
-            const findObjectA: any = database?.find((obj: any) => obj.id === "plyty");
-            const userBuildUpperCadfsgbinets = formData.ogólne["Rodzaj płyty na korpus szafek"].toLowerCase()
-            const fedwf = findObjectA && findObjectA[userBuildUpperCadfsgbinets]
+      // Pobieram cenę obrzeza za [MB]
 
-
+      const userBuildUpperCadfsgbinets =
+        formData.ogólne["Rodzaj płyty na korpus szafek"].toLowerCase();
+      const fedwf = findObjectP && findObjectP[userBuildUpperCadfsgbinets];
 
       // Obliczam i zwracam ilość plyty korpusowaj w metrach kwadratowych
-      const dfds  = (plateQuantityBuildHeight + plateQuantityBuildUpper + plateQuantityBuildLower) * 1.2
+      const dfds =
+        (plateQuantityBuildHeight +
+          plateQuantityBuildUpper +
+          plateQuantityBuildLower) *
+        1.2;
 
-      const sdfsd = (dfds * fedwf).toFixed(2)
+      const sdfsd = Math.round(dfds * fedwf * 100) / 100;
 
-      return dfds > 0 && fedwf  ? Number(sdfsd) : 0
-    }
+      return dfds > 0 && fedwf ? sdfsd : 0;
+    };
 
-    // *** PŁYTA HDF ***
+    // *** PŁYTA HDF *** ok optymalizacja
 
     const plateHDF = () => {
+      // Pobieram dane wprowadzone przez uzytkownika
+      const userBuildUpperHight: number =
+        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
+      const userBuildUpperLength: number =
+        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+      const userBuildLowerLength: number =
+        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+      const userBuildHighLength: number =
+        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+      const userBuildHighHeight: number =
+        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
 
-      // Pobieram dane wprowadzone przez uzytkownika 
-      const userBuildUpperHight: number = formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]
-      const userBuildUpperLength: number = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
-      const userBuildLowerLength: number = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
-      const userBuildHighLength: number = formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]
-      const userBuildHighHeight: number = formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]
+      const hdfdd = findObjectP && findObjectP["hdf"];
 
       // Zwracam obliczoną ilość płyty HDF [M2]
-      return (userBuildUpperHight * userBuildUpperLength + userBuildLowerLength * 72 + userBuildHighLength + userBuildHighHeight) / 10000
-    }
+      return findObjectP
+        ? Math.round(
+            ((userBuildUpperHight * userBuildUpperLength +
+              userBuildLowerLength * 72 +
+              userBuildHighLength +
+              userBuildHighHeight) /
+              10000) *
+              hdfdd *
+              100
+          ) / 100
+        : 0;
+    };
 
-    // *** FRONTY DOLNE ***
+    // *** FRONTY DOLNE ok optymalizacja***
 
     const buildLower = () => {
-
       // Pobieram dane wpissane przez uytkownika
-      const userBuildLowerlenght: number = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
+      const userBuildLowerlenght: number =
+        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+
+
+      const userBuildUpperCadfsgbinets =
+        formData.zabudowaDolna["Rodzaj frontów"].toLowerCase();
+
+      const fedwf = findObjectF && findObjectF[userBuildUpperCadfsgbinets];
 
       // Zwracam obliczoną poweszchnię frontów dolnych w metrach kwadratowych
-      return (userBuildLowerlenght * 72) / 10000
-    }
+      return userBuildLowerlenght && userBuildUpperCadfsgbinets
+        ? Math.round(((userBuildLowerlenght * 72) / 10000) * fedwf * 100) / 100
+        : 0;
+    };
 
     // *** FRONTY GÓRNE ok optymalizacja ***
 
     const buildUpper = () => {
-
       // Pobieram dane wpisane przez uytkownika
-      const userBuildUpperLenght: number = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
-      const userBuildUpperHigh: number = formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]
-      
+      const userBuildUpperLenght: number =
+        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+      const userBuildUpperHigh: number =
+        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
 
 
-                  // Szukam objektu z id 'akcesoria' w bazie 
-                  const findObjectA: any = database?.find((obj: any) => obj.id === "fronty");
+      const userBuildUpperCadfsgbinets =
+        formData.zabudowaGorna["Rodzaj frontów"].toLowerCase();
 
-          // Pobieram typy obrzeza 
-          const dsf = findObjectA && findObjectA["drewniane"]
-          const ddsf = findObjectA && findObjectA["korpusowa biala"]
+      const fedwf = findObjectF && findObjectF[userBuildUpperCadfsgbinets];
 
-          const userBuildUpperCadfsgbinets = formData.zabudowaGorna["Rodzaj frontów"].toLowerCase()
-
-          const fedwf = findObjectA && findObjectA[userBuildUpperCadfsgbinets]
-
-
-
-      
       // Zwracam obliczoną cenę frontów górnych
-      return (((userBuildUpperLenght * userBuildUpperHigh) / 10000) * fedwf).toFixed(2)
-    }
+      return userBuildUpperLenght > 0 && userBuildUpperHigh > 0 && userBuildUpperCadfsgbinets
+        ? Math.round(
+            ((userBuildUpperLenght * userBuildUpperHigh) / 10000) * fedwf * 100
+          ) / 100
+        : 0;
+    };
 
-    // *** ROBOCIZNA *** ok
-    
-    const robocizna = () => {
-      
-      // Szukam obiektu z ceną za robocizne
-      const findObjectR: any = database?.find((obj: any) => obj.id === "robocizna");
-      // Wyodrębniam ceny za robocizne
-      const priceTransport: number = Number(findObjectR?.transport)
-      const priceInstallationLED: number = Number(findObjectR?.['klejenie led'])
-      const priceInstallationPowerSuply: number = Number(findObjectR?.['montaz zasilacza led'])
-
-      // Wyodrębniam dane wprowadzone przez uzytkownika
-      const userTransport = formData.transportMontaz["Odległość w km"]
-      const userSelectLed = formData.zabudowaGorna["Oświtlenie LED"]
-
-      // Obliczam i zwracam cenę
-      return userSelectLed ? ((priceInstallationPowerSuply + priceInstallationLED) + (priceTransport * userTransport)) : (priceTransport * userTransport)
-    }
 
     const summaryprice = () => {
-      return bodyPlate() + plateHDF() + buildLower() + buildUpper() + frontsHigh() + circumcision() + countertop() + drawers() + lowCargo() + highCargo() + lightLed() + cabinets() + legs() + transport() + installation() + robocizna()
-    }
+      return (
+        Math.ceil(
+          (bodyPlate() +
+            plateHDF() +
+            buildLower() +
+            buildUpper() +
+            frontsHigh() +
+            circumcision() +
+            countertop() +
+            drawers() +
+            lowCargo() +
+            highCargo() +
+            lightLed() +
+            cabinets() +
+            legs() +
+            transport() +
+            installation()) *
+            100
+        ) / 100
+      );
+    };
 
-    console.log(buildUpper())
+    console.log(
+      "plyta korpusowa",
+      bodyPlate(),
+      "plyta hdf",
+      plateHDF(),
+      "zabudowa dolna",
+      buildLower(),
+      "zabudowa gorna",
+      buildUpper(),
+      "fronty wysokie",
+      frontsHigh(),
+      "obrzeza",
+      circumcision(),
+      "blat",
+      countertop(),
+      "szuflady",
+      drawers(),
+      "niskie cargo",
+      lowCargo(),
+      "wysokie cargo",
+      highCargo(),
+      "tasma led",
+      lightLed(),
+      "zaiasy",
+      cabinets(),
+      "nogi",
+      legs(),
+      "transport",
+      transport(),
+      "montaz",
+      installation()
+    );
 
-    return summaryprice()
+    setSummaryPrice(summaryprice())
+    
 
-  }
+    return summaryprice() >= 0 ? summaryprice() : 'Błąd'
+  };
 
   return (
     <div className="quotation">
@@ -597,7 +715,10 @@ export const Quotation = () => {
           <form className="quotation_calculator_upperconstruction_form">
             <label>Wysokość pomieszczenia ( w centymetrach )</label>
             <input
+
+              max={100}
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -617,6 +738,10 @@ export const Quotation = () => {
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
+                  zabudowaWysoka: {
+                    ...prevState.zabudowaWysoka,
+                    "Wysokość zabudowy ( w centymetrach)": formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"],
+                  },
                   ogólne: {
                     ...prevState.ogólne,
                     "Zabudowa do sufitu": Boolean(e.target.checked),
@@ -654,6 +779,7 @@ export const Quotation = () => {
             <label>Długość dolnej zabudowy ( w centymetrach )</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -670,6 +796,7 @@ export const Quotation = () => {
             <label>Ilość szafek</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -684,6 +811,7 @@ export const Quotation = () => {
             <label>Ilość szuflad</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -758,6 +886,8 @@ export const Quotation = () => {
           >
             <label>Długość górnej zabudowy ( w centymetrach )</label>
             <input
+            type='number'
+            onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -772,6 +902,8 @@ export const Quotation = () => {
             ></input>
             <label>Wysokość zabudowy ( w centymetrach )</label>
             <input
+            type="number"
+            onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -788,6 +920,7 @@ export const Quotation = () => {
             <label>Ilość szafek</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -845,6 +978,7 @@ export const Quotation = () => {
             <label>Długość zabudowy ( w centymetrach )</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -860,7 +994,10 @@ export const Quotation = () => {
 
             <label>Wysokość zabudowy ( w centymetrach )</label>
             <input
+              disabled={formData.ogólne["Zabudowa do sufitu"]}
+              value={formData.ogólne["Zabudowa do sufitu"] ? formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"] : formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]}
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -877,6 +1014,7 @@ export const Quotation = () => {
             <label>Ilość szafek</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -891,6 +1029,7 @@ export const Quotation = () => {
             <label>Ilość szuflad</label>
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -945,10 +1084,11 @@ export const Quotation = () => {
             className="quotation_calculator_additional_form"
           >
             <h3>Transport i montaż</h3>
-            <label>Odległość w km od miejscowaści Małkinia Górna</label>
+            <label>Odległość w km od miejscowaści <a href="https://maps.app.goo.gl/jAbnqcRqexbd3Q387">Małkinia Górna</a></label>
 
             <input
               type="number"
+              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -976,21 +1116,20 @@ export const Quotation = () => {
           </form>
         </div>
         <div className="quotation_calculator_summary">
-          <button
+          {/* <button
             className="quotation_calculator_summary_button"
             onClick={click}
           >
             Wyślij swoją wycenę, oddzwonimy do Ciebie
-          </button>
+          </button> */}
           <div className="quotation_calculator_summary_price">
-            <p>{calculatePrice()}</p>
+            <p key={summaryPrice} className="roll-out">{summaryPrice} zł</p>
             <span>* wycena nie stanowi oferty handlowej</span>
-            <button onClick={calculatePrice}>TEST</button>
           </div>
         </div>
       </div>
 
-      <div className="centered-fixed-div">
+      {/* <div className="centered-fixed-div">
         <span onClick={close} className="centered-fixed-div-close">
           X
         </span>
@@ -1041,7 +1180,7 @@ export const Quotation = () => {
         </form>
 
         <span></span>
-      </div>
+      </div> */}
     </div>
   );
 };

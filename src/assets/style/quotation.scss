@@ -43,7 +43,7 @@
 
     &_summary {
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-end;
       align-items: center;
       height: 100px;
       width: 100%;
@@ -63,6 +63,10 @@
       }
 
       &_price {
+
+        p {
+          font-size: 30px;
+        }
         span {
           font-size: 15px;
         }
@@ -195,4 +199,30 @@
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+// Ukrywanie strzałek w input type number
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.animated {
+
+}
+
+@keyframes rollout {
+  0% { transform: translateY(-100px);
+        opacity: 0; }
+  100% { transform: none; }
+}
+
+.roll-out {
+  animation: rollout 0.4s;
+  opacity: 1
 }
