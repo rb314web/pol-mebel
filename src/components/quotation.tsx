@@ -659,6 +659,7 @@ export const Quotation = () => {
       );
     };
 
+
     console.log(
       "plyta korpusowa",
       bodyPlate(),
@@ -697,6 +698,15 @@ export const Quotation = () => {
 
     return summaryprice() >= 0 ? summaryprice() : 'Błąd'
   };
+
+  function numberWithSpaces(x: number) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    console.log(parts.join("."))
+    return parts.join(".");
+}
+
+
 
   return (
     <div className="quotation">
@@ -1123,7 +1133,7 @@ export const Quotation = () => {
             Wyślij swoją wycenę, oddzwonimy do Ciebie
           </button> */}
           <div className="quotation_calculator_summary_price">
-            <p key={summaryPrice} className="roll-out">{summaryPrice} zł</p>
+            <p key={summaryPrice} className="roll-out">{numberWithSpaces(summaryPrice)} zł</p>
             <span>* wycena nie stanowi oferty handlowej</span>
           </div>
         </div>
