@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/pol-mebel/static/css/main.e997b44d.css",
+    "main.css": "/pol-mebel/static/css/main.86306644.css",
     "main.js": "/pol-mebel/static/js/main.12a4eed9.js",
     "static/js/787.5fe2f8cf.chunk.js": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js",
     "static/media/1.webp": "/pol-mebel/static/media/1.9ad6ed658755ac4a7752.webp",
@@ -12,6 +12,7 @@
     "static/media/kitchen.jpg": "/pol-mebel/static/media/kitchen.31c80464f70b4febb9fc.jpg",
     "static/media/IMG_20191214_150819.webp": "/pol-mebel/static/media/IMG_20191214_150819.0b60369458757db91645.webp",
     "static/media/cookie.webp": "/pol-mebel/static/media/cookie.0bd749beaa7eec2016fe.webp",
+    "static/media/Montserrat-VariableFont_wght.ttf": "/pol-mebel/static/media/Montserrat-VariableFont_wght.7e687123cd4528224ce5.ttf",
     "static/media/IMG_20190731_100817.webp": "/pol-mebel/static/media/IMG_20190731_100817.c276bd6f637c8b9bd062.webp",
     "static/media/IMG_20221027_135119.webp": "/pol-mebel/static/media/IMG_20221027_135119.99784c12ae62e1e82409.webp",
     "static/media/IMG_20221024_194812.webp": "/pol-mebel/static/media/IMG_20221024_194812.bce4f82b963a062bbf59.webp",
@@ -35,12 +36,12 @@
     "static/media/instagram.svg": "/pol-mebel/static/media/instagram.d583b2473e3ae7a52a4673152333aff4.svg",
     "index.html": "/pol-mebel/index.html",
     "static/media/facebook.svg": "/pol-mebel/static/media/facebook.50db5279e0c95e8e3aa60c90ad2e8fb9.svg",
-    "main.e997b44d.css.map": "/pol-mebel/static/css/main.e997b44d.css.map",
+    "main.86306644.css.map": "/pol-mebel/static/css/main.86306644.css.map",
     "main.12a4eed9.js.map": "/pol-mebel/static/js/main.12a4eed9.js.map",
     "787.5fe2f8cf.chunk.js.map": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e997b44d.css",
+    "static/css/main.86306644.css",
     "static/js/main.12a4eed9.js"
   ]
 }
