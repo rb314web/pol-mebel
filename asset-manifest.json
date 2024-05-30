@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pol-mebel/static/css/main.8c18c075.css",
-    "main.js": "/pol-mebel/static/js/main.61ec9916.js",
+    "main.js": "/pol-mebel/static/js/main.60bf2596.js",
     "static/js/787.5fe2f8cf.chunk.js": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js",
     "static/media/1.webp": "/pol-mebel/static/media/1.9ad6ed658755ac4a7752.webp",
     "static/media/IMG_20210721_182853.webp": "/pol-mebel/static/media/IMG_20210721_182853.94a287b222c02f13ac0c.webp",
@@ -21,7 +21,6 @@
     "static/media/IMG_20210423_160607.webp": "/pol-mebel/static/media/IMG_20210423_160607.89980f88ec80630b05a7.webp",
     "static/media/IMG_20210507_140633.webp": "/pol-mebel/static/media/IMG_20210507_140633.8b37f3401b64f72a4a06.webp",
     "static/media/IMG_20200901_105123.webp": "/pol-mebel/static/media/IMG_20200901_105123.e70750e93bd481207459.webp",
-    "static/media/tttttjpgt.webp": "/pol-mebel/static/media/tttttjpgt.26b156e6ea75d09df6ed.webp",
     "static/media/IMG_20210302_154406.webp": "/pol-mebel/static/media/IMG_20210302_154406.4a949eb34e1714071742.webp",
     "static/media/5.webp": "/pol-mebel/static/media/5.f3347025257bb72322c1.webp",
     "static/media/IMG_20210302_154433.webp": "/pol-mebel/static/media/IMG_20210302_154433.57ef93998514b663e835.webp",
@@ -32,15 +31,16 @@
     "static/media/IMG_20210318_210739.webp": "/pol-mebel/static/media/IMG_20210318_210739.4f6317559b5f4617b18d.webp",
     "static/media/IMG_20210318_211100.webp": "/pol-mebel/static/media/IMG_20210318_211100.5ba5cd85926ca4e64648.webp",
     "static/media/kitchen-mini.jpg": "/pol-mebel/static/media/kitchen-mini.ae7e3a87fb80132a9bf2.jpg",
+    "static/media/tttttjpgt.webp": "/pol-mebel/static/media/tttttjpgt.eccd6f9886cda8d626e3.webp",
     "static/media/instagram.svg": "/pol-mebel/static/media/instagram.d583b2473e3ae7a52a4673152333aff4.svg",
     "index.html": "/pol-mebel/index.html",
     "static/media/facebook.svg": "/pol-mebel/static/media/facebook.50db5279e0c95e8e3aa60c90ad2e8fb9.svg",
     "main.8c18c075.css.map": "/pol-mebel/static/css/main.8c18c075.css.map",
-    "main.61ec9916.js.map": "/pol-mebel/static/js/main.61ec9916.js.map",
+    "main.60bf2596.js.map": "/pol-mebel/static/js/main.60bf2596.js.map",
     "787.5fe2f8cf.chunk.js.map": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8c18c075.css",
-    "static/js/main.61ec9916.js"
+    "static/js/main.60bf2596.js"
   ]
 }
