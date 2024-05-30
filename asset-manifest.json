@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/pol-mebel/static/css/main.23037a0b.css",
+    "main.css": "/pol-mebel/static/css/main.18fe6316.css",
     "main.js": "/pol-mebel/static/js/main.dd74ce9f.js",
     "static/js/787.5fe2f8cf.chunk.js": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js",
     "static/media/tttttjpgt.jpeg": "/pol-mebel/static/media/tttttjpgt.c3ffb0255e75b976cf85.jpeg",
@@ -31,15 +31,16 @@
     "static/media/IMG_20210318_210743.jpg": "/pol-mebel/static/media/IMG_20210318_210743.b04ae037f7236970fe3b.jpg",
     "static/media/IMG_20210318_211100.jpg": "/pol-mebel/static/media/IMG_20210318_211100.52e3f9d90f434fc47297.jpg",
     "static/media/IMG_20210318_210739.jpg": "/pol-mebel/static/media/IMG_20210318_210739.d01ea60560a9485f98fa.jpg",
+    "static/media/kitchen-mini.jpg": "/pol-mebel/static/media/kitchen-mini.ae7e3a87fb80132a9bf2.jpg",
     "static/media/instagram.svg": "/pol-mebel/static/media/instagram.d583b2473e3ae7a52a4673152333aff4.svg",
     "index.html": "/pol-mebel/index.html",
     "static/media/facebook.svg": "/pol-mebel/static/media/facebook.50db5279e0c95e8e3aa60c90ad2e8fb9.svg",
-    "main.23037a0b.css.map": "/pol-mebel/static/css/main.23037a0b.css.map",
+    "main.18fe6316.css.map": "/pol-mebel/static/css/main.18fe6316.css.map",
     "main.dd74ce9f.js.map": "/pol-mebel/static/js/main.dd74ce9f.js.map",
     "787.5fe2f8cf.chunk.js.map": "/pol-mebel/static/js/787.5fe2f8cf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.23037a0b.css",
+    "static/css/main.18fe6316.css",
     "static/js/main.dd74ce9f.js"
   ]
 }
