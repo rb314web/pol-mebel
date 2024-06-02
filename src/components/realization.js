@@ -1,20 +1,18 @@
 import "../assets/style/realization.scss";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import FsLightbox from "fslightbox-react";
 
 import Macy from "macy";
 
 import { AsyncImage } from 'loadable-image'
-import { Blur, Grow, Slide } from 'transitions-kit'
 
 export const Realization = () => {
-  const [toggler, setToggler] = useState(false);
 
   useEffect(() => {
     require("fslightbox");
 
-    var macy = Macy({
+    const macy = Macy({
       container: ".realization_gallery",
       trueOrder: false,
       waitForImages: false,
@@ -30,15 +28,14 @@ export const Realization = () => {
   });
 
   const images = importAll(
-    require.context("../assets/img/realization", false, /\.(png|jpe?g|svg)$/)
+    require.context("../assets/img/realization", false, /\.(png|jpe?g|svg|webp)$/)
   );
 
   const imagesMini = importAll(
-    require.context("../assets/img/realization/mini", false, /\.(png|jpe?g|svg)$/)
+    require.context("../assets/img/realization/mini", false, /\.(png|jpe?g|svg|webp)$/)
   );
 
   function importAll(r) {
-    console.log(r.keys().map(r));
     return r.keys().map(r);
   }
 
@@ -65,6 +62,7 @@ export const Realization = () => {
             <AsyncImage
                     key={index}
                     src={imagePath}
+                    alt='Zdjęcie realizacji'
                     style={{  borderRadius: 3 }}
                     loader={<div style={{ background: '#888' }} />}
                 />
@@ -74,7 +72,6 @@ export const Realization = () => {
         ))}
 
         <FsLightbox
-          toggler={toggler}
           sources={images}
         />
       </div>

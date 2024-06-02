@@ -45,7 +45,7 @@ export const Navigation = () => {
             </li>
           </ul>
 
-          <button onClick={navigationToogle} className="navigation_wrapper_hamburger">
+          <button id="hamburger" onClick={navigationToogle} className="navigation_wrapper_hamburger">
             <span></span>
           </button>
         </div>

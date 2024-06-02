@@ -9,3 +9,8 @@
 body {
   background-color: $bodyColor;
 }
+
+@font-face {
+  font-family: "myFirstFont";
+  src: url("./fonts/Montserrat-VariableFont_wght.ttf");
+}

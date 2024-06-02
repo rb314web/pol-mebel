@@ -1,6 +1,5 @@
-import "../assets/style/footer.scss";
 import { Link } from "react-router-dom";
-import mainLogo from "../assets/img/logo.png";
+import "../assets/style/footer.scss";
 
 export const Footer = () => {
   const year = () => {

@@ -171,29 +171,31 @@ export const Contact = () => {
           </p>
 
           <div className="contact_forminfo_form_box">
-            <label htmlFor="name">Imię i nazwisko</label>
+            <label htmlFor="user_name">Imię i nazwisko</label>
             <input
               type="text"
               className="contact_forminfo_form_box_input"
               value={name}
               onChange={(e) => setName(e.target.value)}
               name="user_name"
+              id="user_name"
             />
           </div>
 
           <div className="contact_forminfo_form_box">
-            <label htmlFor="email">Adres e-mail </label>
+            <label htmlFor="user_email">Adres e-mail </label>
             <input
               type="email"
               className="contact_forminfo_form_box_input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               name="user_email"
+              id="user_email"
             />
           </div>
 
           <div className="contact_forminfo_form_box">
-            <label htmlFor="subject">Numer telefonu</label>
+            <label htmlFor="user_phone">Numer telefonu</label>
             <input
               type="text"
               className="contact_forminfo_form_box_input"
@@ -202,26 +204,29 @@ export const Contact = () => {
                 setPhone(e.target.value);
               }}
               name="user_phone"
+              id="user_phone"
             />
           </div>
           <div className="contact_forminfo_form_box">
-            <label htmlFor="subject">Temat</label>
+            <label htmlFor="user_topic">Temat</label>
             <input
               type="text"
               className="contact_forminfo_form_box_input"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               name="user_topic"
+              id="user_topic"
             />
           </div>
 
           <div className="contact_forminfo_form_box">
-            <label htmlFor="message">Wiadomość</label>
+            <label htmlFor="user_message">Wiadomość</label>
             <textarea
               className="contact_forminfo_form_box_textarea"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               name="user_message"
+              id="user_message"
             />
           </div>
 
@@ -250,6 +255,7 @@ export const Contact = () => {
               href="https://www.facebook.com/profile.php?id=100063695841909"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Odwiedź nas na Facebooku!"
             >
               <FacebookSvg />
             </a>
@@ -257,6 +263,7 @@ export const Contact = () => {
               href="https://www.instagram.com/pol_mebel/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Odwiedź nas na Instagramie!"
             >
               <InstagramSvg />
             </a>

@@ -1,12 +1,10 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
-import { createElement, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../assets/style/quotation.scss";
 import { db } from "../firebase";
 
-import emailjs from "emailjs-com";
-
 export const Quotation = () => {
-  interface formData {
+  interface formDataInterface {
     ogólne: {
       "Wysokosc pomieszczenia ( w centymetrach )": number;
       "Zabudowa do sufitu": boolean;
@@ -44,15 +42,9 @@ export const Quotation = () => {
       "Opcja montażu": boolean;
     };
   }
-
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [message, setMessage] = useState("");
   const [database, setDatabase] = useState<object[]>();
-  const [summaryPrice, setSummaryPrice] = useState<number>(0)
-
-  const [formData, setFormData] = useState<formData>({
+  const [summaryPrice, setSummaryPrice] = useState<number>(0);
+  const [formData, setFormData] = useState<formDataInterface>({
     ogólne: {
       "Wysokosc pomieszczenia ( w centymetrach )": 0,
       "Zabudowa do sufitu": false,
@@ -92,8 +84,9 @@ export const Quotation = () => {
   });
 
   useEffect(() => {
-    calculatePrice()
-  },[formData])
+ calculatePrice();
+ // eslint-disable-next-line
+  }, [formData]);
 
   // Pobieranie cen z bazy danych
 
@@ -106,131 +99,18 @@ export const Quotation = () => {
       snapshot.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id });
       });
-      console.log(data);
       setDatabase(data);
     });
 
     return () => unsuscribe();
   }, []);
 
-  //
-
   const refUpper = useRef(null);
   const refLower = useRef(null);
   const refHigh = useRef(null);
   const refAdittional = useRef(null);
 
-  const click = () => {
-    const fixDiv = document.querySelector(".centered-fixed-div");
-
-    fixDiv?.classList.add("centered-fixed-div-active");
-  };
-
-  const close = () => {
-    const fixDiv = document.querySelector(".centered-fixed-div");
-
-    fixDiv?.classList.remove("centered-fixed-div-active");
-  };
-
-  // const sendForm = (e: any) => {
-  //   e.preventDefault();
-
-  //   const showError = (element: any, id: number, test: string) => {
-  //     const span = document.createElement("span");
-
-  //     span.classList.add("test");
-
-  //     span.innerText = test;
-
-  //     e.target.parentNode.children[id].append(span);
-  //     // alert("sss");
-  //     console.log(e);
-  //   };
-
-  //   // Funkcja sprawdzająca poprwanośc wypełnienia formularza
-  //   const validateForm = (e: any) => {
-  //     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,6}$/;
-  //     const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
-
-  //     let error = 0;
-
-  //     // Usuwam informację o błędzie jesli takie są
-  //     document.querySelectorAll(".test").forEach((item) => {
-  //       item.remove();
-  //     });
-
-  //     // Sprawdzam poprawność wypełnienia i zgodności wpisanych danych
-  //     if (!name) {
-  //       // e.target.lastChild.form[0].style.border = "1px solid red";
-  //       error++;
-  //       showError(e, 0, "Pole jest wymagane");
-  //     }
-  //     if (!emailRegex.test(email)) {
-  //       // e.target.lastChild.form[1].style.border = "1px solid red";
-  //       error++;
-  //       showError(e, 1, "Nieprawidłowy email");
-  //     }
-  //     if (!phoneRegex.test(phone)) {
-  //       // e.target.lastChild.form[2].style.border = "1px solid red";
-  //       error++;
-  //       showError(e, 2, "Nieprawidłowy telefon");
-  //     }
-
-  //     // Zwracam czy licznik błędów jest wiekszy od zera
-  //     return error === 0 ? true : false;
-  //   };
-
-  //   if (validateForm(e)) {
-  //     const sendButton = document.querySelector(
-  //       ".centered-fixed-div_button"
-  //     ) as HTMLElement;
-
-  //     sendButton.style.backgroundColor = "silver";
-  //     sendButton.innerText = ".................";
-
-  //     emailjs
-  //       .sendForm(
-  //         "service_tp2r4tc",
-  //         "template_63cwz16",
-  //         "xxxx",
-  //         "uoa8cmJT5xHCmLk4H"
-  //       )
-  //       .then(
-  //         (result) => {
-  //           showResault("successful");
-  //         },
-  //         (error) => {
-  //           showResault("error");
-  //         }
-  //       );
-  //   }
-  // };
-
-  // Funkcaj wyświetla wynik wysyłania formularza
-  const showResault = (typeResault: string) => {
-    const sendButton = document.querySelector(
-      ".centered-fixed-div_button"
-    ) as HTMLElement;
-
-    if (typeResault === "successful") {
-      sendButton.style.backgroundColor = "green";
-      sendButton.innerText = "Pomyślnie wysłano!";
-      setTimeout(() => {
-        sendButton.style.backgroundColor = "#365956";
-        sendButton.innerText = "Wyślij";
-      }, 3000);
-    } else if (typeResault === "error") {
-      sendButton.style.backgroundColor = "red";
-      sendButton.innerText = "Błąd wysyłania";
-      setTimeout(() => {
-        sendButton.style.backgroundColor = "#8d7272";
-        sendButton.innerText = "Wyślij";
-      }, 3000);
-    }
-  };
-
   const calculatePrice = () => {
-
     const findObjectR: any = database?.find(
       (obj: any) => obj.id === "robocizna"
     );
@@ -241,21 +121,15 @@ export const Quotation = () => {
 
     const findObjectB: any = database?.find((obj: any) => obj.id === "blaty");
 
-    const findObjectO: any = database?.find(
-      (obj: any) => obj.id === "obrzeze"
-    );
+    const findObjectO: any = database?.find((obj: any) => obj.id === "obrzeze");
 
-    const findObjectF: any = database?.find(
-      (obj: any) => obj.id === "fronty"
-    );
+    const findObjectF: any = database?.find((obj: any) => obj.id === "fronty");
 
     const findObjectP: any = database?.find((obj: any) => obj.id === "plyty");
-
 
     // *** MONTAZ *** ok
 
     const installation = () => {
-
       // Sprawdzam czy uzytkownik wybrał opcję montazu
       const userInstallation = formData.transportMontaz["Opcja montażu"];
       // Zapisuje cene montazu
@@ -268,7 +142,6 @@ export const Quotation = () => {
     // *** TRANSPORT *** ok
 
     const transport = () => {
-
       // Zapisuje cenę za transportu
       const priceTransport: number = Number(findObjectR?.transport);
       // Pobieram odległośc wpisaną przez uzytkownika
@@ -281,7 +154,6 @@ export const Quotation = () => {
     // *** NOZKI *** ok
 
     const legs = () => {
-
       // Zapisuje cenę za nózek
       const priceLegs = Number(findObjectA?.nozka);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
@@ -298,7 +170,6 @@ export const Quotation = () => {
     // *** ZAWIASY *** ok
 
     const cabinets = () => {
-
       // Zapisuje cenę za zawiasu
       const priceHinges = Number(findObjectA?.zawias);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
@@ -320,7 +191,6 @@ export const Quotation = () => {
 
     // *** OŚWIETLENIE LED *** ok
     const lightLed = () => {
-
       // Pobieram cene za klejenie LED
       const priceGluingLed = Number(findObjectR?.["klejenie led"]);
       // Pobieram cene za taśme LED
@@ -338,7 +208,7 @@ export const Quotation = () => {
         formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
 
       // Obliczam i zwracam cenę za oświtlenie LED, jezeli uzytkownik nie wybrał to zwracam 0 i jezeli brak długości zabudowy zwracam 0
-      return userSelectLightLed && userInputConstructionLength != 0
+      return userSelectLightLed && userInputConstructionLength !== 0
         ? (userInputConstructionLength / 100) *
             (priceGluingLed + priceProfil + priceLedStrip) +
             pricePowerSupply +
@@ -376,7 +246,6 @@ export const Quotation = () => {
     // *** SZUFLADY *** ok
 
     const drawers = () => {
-
       // Pobieram cenę szuflady
       const priceDrawers = Number(findObjectA?.["szuflada"]);
       // Pobieram podaną przez uzytkownika ilość szuflad w zabudowie wysokiej
@@ -396,7 +265,6 @@ export const Quotation = () => {
     // *** BLAT *** ok
 
     const countertop = () => {
- 
       // Pobieram jaki rodzaj blatu wybrał uzytkownik
       const userInputCountertopType =
         formData.zabudowaDolna["Rodzaj blatu"].toLowerCase();
@@ -456,11 +324,7 @@ export const Quotation = () => {
           circumcisionBuildUpper) *
         1.2;
 
-
-
       // Pobieram typy obrzeza
-      const dsf = findObjectO && findObjectO["drewniane"];
-      const ddsf = findObjectO && findObjectO["korpusowa biala"];
 
       const userBuildUpperCadfsgbinets =
         formData.ogólne["Rodzaj płyty na korpus szafek"].toLowerCase();
@@ -489,10 +353,9 @@ export const Quotation = () => {
       const surfaceFrontsHigh =
         (userBuildHeightLength * (userBuildHeightHeight - 10)) / 10000;
 
-
       // Pobieranie ceny wybranej opcji frontów
       const priceSelectSurface =
-        userBuildHeightFrontsType != ""
+        userBuildHeightFrontsType !== ""
           ? findObjectF?.[userBuildHeightFrontsType]
           : 0;
 
@@ -600,7 +463,6 @@ export const Quotation = () => {
       const userBuildLowerlenght: number =
         formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
 
-
       const userBuildUpperCadfsgbinets =
         formData.zabudowaDolna["Rodzaj frontów"].toLowerCase();
 
@@ -621,20 +483,20 @@ export const Quotation = () => {
       const userBuildUpperHigh: number =
         formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
 
-
       const userBuildUpperCadfsgbinets =
         formData.zabudowaGorna["Rodzaj frontów"].toLowerCase();
 
       const fedwf = findObjectF && findObjectF[userBuildUpperCadfsgbinets];
 
       // Zwracam obliczoną cenę frontów górnych
-      return userBuildUpperLenght > 0 && userBuildUpperHigh > 0 && userBuildUpperCadfsgbinets
+      return userBuildUpperLenght > 0 &&
+        userBuildUpperHigh > 0 &&
+        userBuildUpperCadfsgbinets
         ? Math.round(
             ((userBuildUpperLenght * userBuildUpperHigh) / 10000) * fedwf * 100
           ) / 100
         : 0;
     };
-
 
     const summaryprice = () => {
       return (
@@ -659,61 +521,56 @@ export const Quotation = () => {
       );
     };
 
+    // console.log(
+    //   "plyta korpusowa",
+    //   bodyPlate(),
+    //   "plyta hdf",
+    //   plateHDF(),
+    //   "zabudowa dolna",
+    //   buildLower(),
+    //   "zabudowa gorna",
+    //   buildUpper(),
+    //   "fronty wysokie",
+    //   frontsHigh(),
+    //   "obrzeza",
+    //   circumcision(),
+    //   "blat",
+    //   countertop(),
+    //   "szuflady",
+    //   drawers(),
+    //   "niskie cargo",
+    //   lowCargo(),
+    //   "wysokie cargo",
+    //   highCargo(),
+    //   "tasma led",
+    //   lightLed(),
+    //   "zaiasy",
+    //   cabinets(),
+    //   "nogi",
+    //   legs(),
+    //   "transport",
+    //   transport(),
+    //   "montaz",
+    //   installation()
+    // );
 
-    console.log(
-      "plyta korpusowa",
-      bodyPlate(),
-      "plyta hdf",
-      plateHDF(),
-      "zabudowa dolna",
-      buildLower(),
-      "zabudowa gorna",
-      buildUpper(),
-      "fronty wysokie",
-      frontsHigh(),
-      "obrzeza",
-      circumcision(),
-      "blat",
-      countertop(),
-      "szuflady",
-      drawers(),
-      "niskie cargo",
-      lowCargo(),
-      "wysokie cargo",
-      highCargo(),
-      "tasma led",
-      lightLed(),
-      "zaiasy",
-      cabinets(),
-      "nogi",
-      legs(),
-      "transport",
-      transport(),
-      "montaz",
-      installation()
-    );
+    setSummaryPrice(summaryprice());
 
-    setSummaryPrice(summaryprice())
-    
-
-    return summaryprice() >= 0 ? summaryprice() : 'Błąd'
+    return summaryprice() >= 0 ? summaryprice() : "Błąd";
   };
 
   function numberWithSpaces(x: number) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    console.log(parts.join("."))
     return parts.join(".");
-}
-
-
+  }
 
   return (
     <div className="quotation">
       <div className="quotation_photo">
         <h2>Wycena mebli kuchennych</h2>
         <img
-          src={require("../assets/img/tttttjpgt.jpeg")}
+          src={require("../assets/img/tttttjpgt.webp")}
           alt="Zdjęcie mebli kuchennych"
         />
       </div>
@@ -723,12 +580,22 @@ export const Quotation = () => {
           <h3>Ogólne</h3>
 
           <form className="quotation_calculator_upperconstruction_form">
-            <label>Wysokość pomieszczenia ( w centymetrach )</label>
+            <label htmlFor="wysokosc_pomieszczenia">
+              Wysokość pomieszczenia ( w centymetrach )
+            </label>
             <input
-
+              id="wysokosc_pomieszczenia"
               max={100}
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -742,15 +609,19 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Zabudowa do sufitu</label>
+            <label htmlFor="zabudowa_do_sufitu">Zabudowa do sufitu</label>
             <input
+              id="zabudowa_do_sufitu"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
                   zabudowaWysoka: {
                     ...prevState.zabudowaWysoka,
-                    "Wysokość zabudowy ( w centymetrach)": formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"],
+                    "Wysokość zabudowy ( w centymetrach)":
+                      formData.ogólne[
+                        "Wysokosc pomieszczenia ( w centymetrach )"
+                      ],
                   },
                   ogólne: {
                     ...prevState.ogólne,
@@ -760,8 +631,11 @@ export const Quotation = () => {
               }
             />
 
-            <label>Rodzaj płyty na korpusy szafek</label>
+            <label htmlFor="rodzaj_plyty_na_korpusy_szafek">
+              Rodzaj płyty na korpusy szafek
+            </label>
             <select
+              id="rodzaj_plyty_na_korpusy_szafek"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -786,10 +660,21 @@ export const Quotation = () => {
             ref={refUpper}
             className="quotation_calculator_upperconstruction_form"
           >
-            <label>Długość dolnej zabudowy ( w centymetrach )</label>
+            <label htmlFor="dlugość_dolnej_zabudowy">
+              Długość dolnej zabudowy ( w centymetrach )
+            </label>
             <input
+            id="dlugość_dolnej_zabudowy"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -803,10 +688,19 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Ilość szafek</label>
+            <label htmlFor="ilość_szafek">Ilość szafek</label>
             <input
+            id="ilość_szafek"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -818,10 +712,19 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Ilość szuflad</label>
+            <label htmlFor="ilosc_szuflad">Ilość szuflad</label>
             <input
+            id="ilosc_szuflad"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -833,8 +736,9 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Cargo niskie</label>
+            <label htmlFor="cargo_niskie">Cargo niskie</label>
             <input
+            id="cargo_niskie"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -847,8 +751,9 @@ export const Quotation = () => {
               }
             />
 
-            <label>Rodzaj frontów</label>
+            <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
             <select
+            id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -869,8 +774,9 @@ export const Quotation = () => {
               <option value="Drewniane">Drewniane</option>
             </select>
 
-            <label>Rodzaj blatu</label>
+            <label htmlFor="rodzaj_blatu">Rodzaj blatu</label>
             <select
+            id="rodzaj_blatu"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -894,10 +800,19 @@ export const Quotation = () => {
             ref={refLower}
             className="quotation_calculator_upperconstruction_form"
           >
-            <label>Długość górnej zabudowy ( w centymetrach )</label>
+            <label htmlFor="dlugosc_gornej_zabudowy">Długość górnej zabudowy ( w centymetrach )</label>
             <input
-            type='number'
-            onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+            id="dlugosc_gornej_zabudowy"
+              type="number"
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -910,10 +825,19 @@ export const Quotation = () => {
                 }))
               }
             ></input>
-            <label>Wysokość zabudowy ( w centymetrach )</label>
+            <label htmlFor="wysokosc_zabudowy">Wysokość zabudowy ( w centymetrach )</label>
             <input
-            type="number"
-            onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+            id="wysokosc_zabudowy"
+              type="number"
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -927,10 +851,19 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Ilość szafek</label>
+            <label htmlFor="ilosc_szafek">Ilość szafek</label>
             <input
+            id="ilosc_szafek"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -942,8 +875,9 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Rodzaj frontów</label>
+            <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
             <select
+            id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -964,8 +898,9 @@ export const Quotation = () => {
               <option value="Drewniane">Drewniane</option>
             </select>
 
-            <label>Oświetlenie LED</label>
+            <label htmlFor="oswietlenie_led">Oświetlenie LED</label>
             <input
+            id="oswietlenie_led"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -985,10 +920,19 @@ export const Quotation = () => {
             ref={refHigh}
             className="quotation_calculator_highconstruction_form"
           >
-            <label>Długość zabudowy ( w centymetrach )</label>
+            <label htmlFor="dlugosc_zabudowy">Długość zabudowy ( w centymetrach )</label>
             <input
+            id="dlugosc_zabudowy"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1002,12 +946,27 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Wysokość zabudowy ( w centymetrach )</label>
+            <label htmlFor="wysokosc_zabudowy">Wysokość zabudowy ( w centymetrach )</label>
             <input
+            id="wysokosc_zabudowy"
               disabled={formData.ogólne["Zabudowa do sufitu"]}
-              value={formData.ogólne["Zabudowa do sufitu"] ? formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"] : formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]}
+              value={
+                formData.ogólne["Zabudowa do sufitu"]
+                  ? formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"]
+                  : formData.zabudowaWysoka[
+                      "Wysokość zabudowy ( w centymetrach)"
+                    ]
+              }
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1021,10 +980,19 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Ilość szafek</label>
+            <label htmlFor="ilosc_szafek">Ilość szafek</label>
             <input
+            id="ilosc_szafek"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1036,10 +1004,19 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Ilość szuflad</label>
+            <label htmlFor="ilosc_szuflad">Ilość szuflad</label>
             <input
+            id="ilosc_szuflad"
               type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1051,8 +1028,9 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Cargo wysokie</label>
+            <label htmlFor="cargo_wysokie">Cargo wysokie</label>
             <input
+            id="cargo_wysokie"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -1065,8 +1043,9 @@ export const Quotation = () => {
               }
             />
 
-            <label>Rodzaj frontów</label>
+            <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
             <select
+            id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1094,11 +1073,27 @@ export const Quotation = () => {
             className="quotation_calculator_additional_form"
           >
             <h3>Transport i montaż</h3>
-            <label>Odległość w km od miejscowaści <a href="https://maps.app.goo.gl/jAbnqcRqexbd3Q387">Małkinia Górna</a></label>
+            <label htmlFor="odległosc">
+              Odległość w km od miejscowaści{" "}
+              <a href="https://maps.app.goo.gl/jAbnqcRqexbd3Q387">
+                Małkinia Górna
+              </a>
+            </label>
 
             <input
-              type="number"
-              onFocus={(e) => e.target.addEventListener("wheel", function (e) { e.preventDefault() }, { passive: false })}
+            id="odległosc"
+              type="text"
+              pattern="\d*"
+              maxLength={4}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1110,8 +1105,9 @@ export const Quotation = () => {
               }
             ></input>
 
-            <label>Opcja montażu</label>
+            <label htmlFor="opcja_montazu">Opcja montażu</label>
             <input
+            id="opcja_montazu"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1133,7 +1129,9 @@ export const Quotation = () => {
             Wyślij swoją wycenę, oddzwonimy do Ciebie
           </button> */}
           <div className="quotation_calculator_summary_price">
-            <p key={summaryPrice} className="roll-out">{numberWithSpaces(summaryPrice)} zł</p>
+            <p key={summaryPrice} className="roll-out">
+              {numberWithSpaces(summaryPrice)} zł
+            </p>
             <span>* wycena nie stanowi oferty handlowej</span>
           </div>
         </div>
