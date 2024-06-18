@@ -1,20 +1,12 @@
 import { Link } from "react-router-dom";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 import "../assets/style/header.scss";
-import { useEffect } from "react";
 
 export const Header = () => {
-  useEffect(() => {
-    AOS.init();
-  }, []);
 
   return (
     <div className="header">
       <div
-        data-aos="fade-right"
-        data-aos-duration="1000"
         className="header_text"
       >
         <p>Witaj na stronie </p>

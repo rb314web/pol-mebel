@@ -2,43 +2,44 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import "../assets/style/quotation.scss";
 import { db } from "../firebase";
+import { easeOut, motion } from "framer-motion";
 
 export const Quotation = () => {
   interface formDataInterface {
     ogólne: {
-      "Wysokosc pomieszczenia ( w centymetrach )": number;
+      "Wysokosc pomieszczenia ( w centymetrach )": string;
       "Zabudowa do sufitu": boolean;
       "Rodzaj płyty na korpus szafek": string;
     };
 
     zabudowaDolna: {
-      "Długość zabudowy ( w centymetrach )": number;
-      "Ilość szafek": number;
-      "Ilość szuflad": number;
+      "Długość zabudowy ( w centymetrach )": string;
+      "Ilość szafek": string;
+      "Ilość szuflad": string;
       "Cargo nieskie": boolean;
       "Rodzaj frontów": string;
       "Rodzaj blatu": string;
     };
 
     zabudowaGorna: {
-      "Długość zabudowy ( w centymetrach )": number;
-      "Wysokość zabudowy ( w centymetrach )": number;
-      "Ilość szafek": number;
+      "Długość zabudowy ( w centymetrach )": string;
+      "Wysokość zabudowy ( w centymetrach )": string;
+      "Ilość szafek": string;
       "Rodzaj frontów": string;
       "Oświtlenie LED": boolean;
     };
 
     zabudowaWysoka: {
-      "Długość zabudowy ( w centymetrach)": number;
-      "Wysokość zabudowy ( w centymetrach)": number;
-      "Ilość szafek": number;
-      "Ilość szufled": number;
+      "Długość zabudowy ( w centymetrach)": string;
+      "Wysokość zabudowy ( w centymetrach)": string;
+      "Ilość szafek": string;
+      "Ilość szufled": string;
       "Cargo wysokie": boolean;
       "Rodzaj frontów": string;
     };
 
     transportMontaz: {
-      "Odległość w km": number;
+      "Odległość w km": string;
       "Opcja montażu": boolean;
     };
   }
@@ -46,46 +47,46 @@ export const Quotation = () => {
   const [summaryPrice, setSummaryPrice] = useState<number>(0);
   const [formData, setFormData] = useState<formDataInterface>({
     ogólne: {
-      "Wysokosc pomieszczenia ( w centymetrach )": 0,
+      "Wysokosc pomieszczenia ( w centymetrach )": '',
       "Zabudowa do sufitu": false,
       "Rodzaj płyty na korpus szafek": "",
     },
 
     zabudowaDolna: {
-      "Długość zabudowy ( w centymetrach )": 0,
-      "Ilość szafek": 0,
-      "Ilość szuflad": 0,
+      "Długość zabudowy ( w centymetrach )": '',
+      "Ilość szafek": '',
+      "Ilość szuflad": '',
       "Cargo nieskie": false,
       "Rodzaj frontów": "",
       "Rodzaj blatu": "",
     },
 
     zabudowaGorna: {
-      "Długość zabudowy ( w centymetrach )": 0,
-      "Wysokość zabudowy ( w centymetrach )": 0,
-      "Ilość szafek": 0,
+      "Długość zabudowy ( w centymetrach )": '',
+      "Wysokość zabudowy ( w centymetrach )": '',
+      "Ilość szafek": '',
       "Rodzaj frontów": "",
       "Oświtlenie LED": false,
     },
 
     zabudowaWysoka: {
-      "Długość zabudowy ( w centymetrach)": 0,
-      "Wysokość zabudowy ( w centymetrach)": 0,
-      "Ilość szafek": 0,
-      "Ilość szufled": 0,
+      "Długość zabudowy ( w centymetrach)": '',
+      "Wysokość zabudowy ( w centymetrach)": '',
+      "Ilość szafek": '',
+      "Ilość szufled": '',
       "Cargo wysokie": false,
       "Rodzaj frontów": "",
     },
 
     transportMontaz: {
-      "Odległość w km": 0,
+      "Odległość w km": '',
       "Opcja montażu": false,
     },
   });
 
   useEffect(() => {
- calculatePrice();
- // eslint-disable-next-line
+    calculatePrice();
+    // eslint-disable-next-line
   }, [formData]);
 
   // Pobieranie cen z bazy danych
@@ -145,7 +146,7 @@ export const Quotation = () => {
       // Zapisuje cenę za transportu
       const priceTransport: number = Number(findObjectR?.transport);
       // Pobieram odległośc wpisaną przez uzytkownika
-      const userInputTransport = formData.transportMontaz["Odległość w km"];
+      const userInputTransport = Number(formData.transportMontaz["Odległość w km"]);
 
       // Zwracam obliczoną cenę za transport
       return userInputTransport === 0 ? 0 : userInputTransport * priceTransport;
@@ -157,9 +158,9 @@ export const Quotation = () => {
       // Zapisuje cenę za nózek
       const priceLegs = Number(findObjectA?.nozka);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
-      const userBuildLowerCabinet = formData.zabudowaDolna["Ilość szafek"];
+      const userBuildLowerCabinet = Number(formData.zabudowaDolna["Ilość szafek"]);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie wysokiej
-      const userBuildHighCabinet = formData.zabudowaWysoka["Ilość szafek"];
+      const userBuildHighCabinet = Number(formData.zabudowaWysoka["Ilość szafek"]);
 
       // Zwracam cenę za nózki
       return findObjectA
@@ -173,11 +174,11 @@ export const Quotation = () => {
       // Zapisuje cenę za zawiasu
       const priceHinges = Number(findObjectA?.zawias);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
-      const userBuildLowerCabinets = formData.zabudowaDolna["Ilość szafek"];
+      const userBuildLowerCabinets = Number(formData.zabudowaDolna["Ilość szafek"]);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie górnej
-      const userBuildHihghCabinets = formData.zabudowaGorna["Ilość szafek"];
+      const userBuildHihghCabinets = Number(formData.zabudowaGorna["Ilość szafek"]);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie wysokiej
-      const userBuildUpperCabinets = formData.zabudowaWysoka["Ilość szafek"];
+      const userBuildUpperCabinets = Number(formData.zabudowaWysoka["Ilość szafek"]);
 
       // Obliczam i zwracam cene za zawiasy
       return findObjectA
@@ -205,7 +206,7 @@ export const Quotation = () => {
       const userSelectLightLed = formData.zabudowaGorna["Oświtlenie LED"];
       // Pobieram długość zabudowy podanej przez uzytkownika
       const userInputConstructionLength =
-        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]);
 
       // Obliczam i zwracam cenę za oświtlenie LED, jezeli uzytkownik nie wybrał to zwracam 0 i jezeli brak długości zabudowy zwracam 0
       return userSelectLightLed && userInputConstructionLength !== 0
@@ -250,10 +251,10 @@ export const Quotation = () => {
       const priceDrawers = Number(findObjectA?.["szuflada"]);
       // Pobieram podaną przez uzytkownika ilość szuflad w zabudowie wysokiej
       const userInputConstructionLength =
-        formData.zabudowaWysoka["Ilość szufled"];
+        Number(formData.zabudowaWysoka["Ilość szufled"]);
       // Pobieram podaną przez uzytkownika ilość szafek w zabudowie dolnej
       const userInputConstructionLength1 =
-        formData.zabudowaDolna["Ilość szuflad"];
+        Number(formData.zabudowaDolna["Ilość szuflad"]);
 
       // Zwracam cenę za szuflady
       return findObjectA
@@ -273,7 +274,7 @@ export const Quotation = () => {
         userInputCountertopType && findObjectB[userInputCountertopType];
       // Pobieram długość blatu
       const userInputConstructionLength =
-        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]);
 
       // Obliczam i zwracam cenę blatu
       return (userInputConstructionLength / 100) * priceCountertop;
@@ -284,18 +285,18 @@ export const Quotation = () => {
     const circumcision = () => {
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie dolnej
       const userBuildLowerLenght =
-        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
-      const userBuildLowerCabinets = formData.zabudowaDolna["Ilość szafek"];
+        Number(formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]);
+      const userBuildLowerCabinets = Number(formData.zabudowaDolna["Ilość szafek"]);
       // Oblicam sume obrzezy w zabudowie dolnej
       const circumcisionBuildLower =
         (userBuildLowerLenght * 3 + 2 * userBuildLowerCabinets * 72) / 100;
 
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie górnej
       const userBuildHeightLength =
-        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]);
       const userBuildHeightHeight =
-        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
-      const userBuildHeightCabinets = formData.zabudowaGorna["Ilość szafek"];
+        Number(formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]);
+      const userBuildHeightCabinets = Number(formData.zabudowaGorna["Ilość szafek"]);
       const userInputConstructionLength44 = Math.floor(
         userBuildHeightHeight / 30
       );
@@ -307,10 +308,10 @@ export const Quotation = () => {
 
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie wysokiej
       const userBuildUpperLenght =
-        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]);
       const userBuildUpperHeight =
-        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
-      const userBuildUpperCabinets = formData.zabudowaWysoka["Ilość szafek"];
+        Number(formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]);
+      const userBuildUpperCabinets = Number(formData.zabudowaWysoka["Ilość szafek"]);
       // Oblicam sume obrzezy w zabudowie wysokiej
       const circumcisionBuildUpper =
         (userBuildUpperLenght * 7 +
@@ -343,9 +344,9 @@ export const Quotation = () => {
     const frontsHigh = () => {
       // Pobieram dane wprowadzone przez uzytkownika
       const userBuildHeightLength =
-        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]);
       const userBuildHeightHeight =
-        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]);
       const userBuildHeightFrontsType =
         formData.zabudowaWysoka["Rodzaj frontów"].toLowerCase();
 
@@ -370,21 +371,21 @@ export const Quotation = () => {
     const bodyPlate = () => {
       // Pobieram dane wprowadzone przez uzytkownika
       const userBuildLowerLength: number =
-        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]);
       const userBuildLowerCabinet: number =
-        formData.zabudowaDolna["Ilość szafek"];
+        Number(formData.zabudowaDolna["Ilość szafek"]);
       const userBuildUpperLength: number =
-        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]);
       const userBuildUpperCabinet: number =
-        formData.zabudowaGorna["Ilość szafek"];
+        Number(formData.zabudowaGorna["Ilość szafek"]);
       const userBuildUpperHeight: number =
-        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]);
       const userBuildHighLength: number =
-        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]);
       const userBuildHighHeight: number =
-        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]);
       const userBuildHighCabinet: number =
-        formData.zabudowaWysoka["Ilość szafek"];
+        Number(formData.zabudowaWysoka["Ilość szafek"]);
 
       // Ilość płyty zabudowa dolna [MB]
       const plateQuantityBuildLower: number =
@@ -430,15 +431,15 @@ export const Quotation = () => {
     const plateHDF = () => {
       // Pobieram dane wprowadzone przez uzytkownika
       const userBuildUpperHight: number =
-        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]);
       const userBuildUpperLength: number =
-        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]);
       const userBuildLowerLength: number =
-        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]);
       const userBuildHighLength: number =
-        formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]);
       const userBuildHighHeight: number =
-        formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"];
+        Number(formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]);
 
       const hdfdd = findObjectP && findObjectP["hdf"];
 
@@ -461,7 +462,7 @@ export const Quotation = () => {
     const buildLower = () => {
       // Pobieram dane wpissane przez uytkownika
       const userBuildLowerlenght: number =
-        formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]);
 
       const userBuildUpperCadfsgbinets =
         formData.zabudowaDolna["Rodzaj frontów"].toLowerCase();
@@ -479,9 +480,9 @@ export const Quotation = () => {
     const buildUpper = () => {
       // Pobieram dane wpisane przez uytkownika
       const userBuildUpperLenght: number =
-        formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]);
       const userBuildUpperHigh: number =
-        formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"];
+        Number(formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]);
 
       const userBuildUpperCadfsgbinets =
         formData.zabudowaGorna["Rodzaj frontów"].toLowerCase();
@@ -499,6 +500,7 @@ export const Quotation = () => {
     };
 
     const summaryprice = () => {
+      console.log(formData);
       return (
         Math.ceil(
           (bodyPlate() +
@@ -521,39 +523,6 @@ export const Quotation = () => {
       );
     };
 
-    // console.log(
-    //   "plyta korpusowa",
-    //   bodyPlate(),
-    //   "plyta hdf",
-    //   plateHDF(),
-    //   "zabudowa dolna",
-    //   buildLower(),
-    //   "zabudowa gorna",
-    //   buildUpper(),
-    //   "fronty wysokie",
-    //   frontsHigh(),
-    //   "obrzeza",
-    //   circumcision(),
-    //   "blat",
-    //   countertop(),
-    //   "szuflady",
-    //   drawers(),
-    //   "niskie cargo",
-    //   lowCargo(),
-    //   "wysokie cargo",
-    //   highCargo(),
-    //   "tasma led",
-    //   lightLed(),
-    //   "zaiasy",
-    //   cabinets(),
-    //   "nogi",
-    //   legs(),
-    //   "transport",
-    //   transport(),
-    //   "montaz",
-    //   installation()
-    // );
-
     setSummaryPrice(summaryprice());
 
     return summaryprice() >= 0 ? summaryprice() : "Błąd";
@@ -565,8 +534,19 @@ export const Quotation = () => {
     return parts.join(".");
   }
 
+  const countDecimals = (string: string) => {
+    const parts = string.split('.');
+    return parts.length > 1 ? parts[1].length - 1 : 0;
+  }
+
+
   return (
-    <div className="quotation">
+    <motion.div
+      initial={{ x: 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.3, ease: easeOut }}
+      className="quotation"
+    >
       <div className="quotation_photo">
         <h2>Wycena mebli kuchennych</h2>
         <img
@@ -584,9 +564,8 @@ export const Quotation = () => {
               Wysokość pomieszczenia ( w centymetrach )
             </label>
             <input
-              id="wysokosc_pomieszczenia"
-              max={100}
-              type="number"
+              type="text"
+              inputMode="numeric"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -596,17 +575,44 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  ogólne: {
-                    ...prevState.ogólne,
-                    "Wysokosc pomieszczenia ( w centymetrach )": Number(
-                      e.target.value
-                    ),
-                  },
-                }))
+              value={
+                formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"]
               }
+              onChange={(e) => {
+
+                if (Number(Number(e.target.value).toFixed(2)) < 10000 && countDecimals(e.target.value) < 2) {
+                  if (formData.ogólne["Zabudowa do sufitu"]) {
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      ogólne: {
+                        ...prevState.ogólne,
+                        "Wysokosc pomieszczenia ( w centymetrach )": e.target.value,
+                      },
+                      zabudowaWysoka: {
+                        ...prevState.zabudowaWysoka,
+                        "Wysokość zabudowy ( w centymetrach)": e.target.value,
+                      },
+                      zabudowaGorna: {
+                        ...prevState.zabudowaGorna,
+                        "Wysokość zabudowy ( w centymetrach )":
+                          Number(e.target.value) > 146
+                            ? (Number(e.target.value) - 146).toString()
+                            : '',
+                      },
+                    }));
+                  } else {
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      ogólne: {
+                        ...prevState.ogólne,
+                        "Wysokosc pomieszczenia ( w centymetrach )": 
+                          e.target.value
+                        ,
+                      },
+                    }));
+                  }
+                }
+              }}
             ></input>
 
             <label htmlFor="zabudowa_do_sufitu">Zabudowa do sufitu</label>
@@ -616,6 +622,10 @@ export const Quotation = () => {
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
+                  ogólne: {
+                    ...prevState.ogólne,
+                    "Zabudowa do sufitu": Boolean(e.target.checked),
+                  },
                   zabudowaWysoka: {
                     ...prevState.zabudowaWysoka,
                     "Wysokość zabudowy ( w centymetrach)":
@@ -623,9 +633,16 @@ export const Quotation = () => {
                         "Wysokosc pomieszczenia ( w centymetrach )"
                       ],
                   },
-                  ogólne: {
-                    ...prevState.ogólne,
-                    "Zabudowa do sufitu": Boolean(e.target.checked),
+                  zabudowaGorna: {
+                    ...prevState.zabudowaGorna,
+                    "Wysokość zabudowy ( w centymetrach )":
+                      Number(formData.ogólne[
+                        "Wysokosc pomieszczenia ( w centymetrach )"
+                      ]) > 146
+                        ? (Number(formData.ogólne[
+                            "Wysokosc pomieszczenia ( w centymetrach )"
+                          ]) - 146).toString()
+                        : '',
                   },
                 }))
               }
@@ -664,8 +681,9 @@ export const Quotation = () => {
               Długość dolnej zabudowy ( w centymetrach )
             </label>
             <input
-            id="dlugość_dolnej_zabudowy"
-              type="number"
+              id="dlugość_dolnej_zabudowy"
+              type="text"
+              inputMode="numeric"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -675,23 +693,33 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaDolna: {
-                    ...prevState.zabudowaDolna,
-                    "Długość zabudowy ( w centymetrach )": Number(
-                      e.target.value
-                    ),
-                  },
-                }))
+              value={
+                formData.zabudowaDolna[
+                  "Długość zabudowy ( w centymetrach )"
+                ]
+
+
               }
+              onChange={(e) => {
+                if (Number(Number(e.target.value).toFixed(2)) < 10000 && countDecimals(e.target.value) < 2) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaDolna: {
+                      ...prevState.zabudowaDolna,
+                      "Długość zabudowy ( w centymetrach )":
+                        e.target.value
+                      ,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="ilość_szafek">Ilość szafek</label>
             <input
-            id="ilość_szafek"
-              type="number"
+              id="ilość_szafek"
+              type="text"
+              maxLength={4}
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -701,21 +729,27 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaDolna: {
-                    ...prevState.zabudowaDolna,
-                    "Ilość szafek": Number(e.target.value),
-                  },
-                }))
+              value={
+                formData.zabudowaDolna["Ilość szafek"]
               }
+              onChange={(e) => {
+                if (Number(e.target.value) < 1000) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaDolna: {
+                      ...prevState.zabudowaDolna,
+                      "Ilość szafek": e.target.value,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="ilosc_szuflad">Ilość szuflad</label>
             <input
-            id="ilosc_szuflad"
-              type="number"
+              id="ilosc_szuflad"
+              type="text"
+              maxLength={4}
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -725,20 +759,25 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaDolna: {
-                    ...prevState.zabudowaDolna,
-                    "Ilość szuflad": Number(e.target.value),
-                  },
-                }))
+              value={
+                formData.zabudowaDolna["Ilość szuflad"]
               }
+              onChange={(e) => {
+                if (Number(e.target.value) < 1000) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaDolna: {
+                      ...prevState.zabudowaDolna,
+                      "Ilość szuflad": e.target.value,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="cargo_niskie">Cargo niskie</label>
             <input
-            id="cargo_niskie"
+              id="cargo_niskie"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -753,7 +792,7 @@ export const Quotation = () => {
 
             <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
             <select
-            id="rodzaj_frontow"
+              id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -776,7 +815,7 @@ export const Quotation = () => {
 
             <label htmlFor="rodzaj_blatu">Rodzaj blatu</label>
             <select
-            id="rodzaj_blatu"
+              id="rodzaj_blatu"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -800,10 +839,12 @@ export const Quotation = () => {
             ref={refLower}
             className="quotation_calculator_upperconstruction_form"
           >
-            <label htmlFor="dlugosc_gornej_zabudowy">Długość górnej zabudowy ( w centymetrach )</label>
+            <label htmlFor="dlugosc_gornej_zabudowy">
+              Długość górnej zabudowy ( w centymetrach )
+            </label>
             <input
-            id="dlugosc_gornej_zabudowy"
-              type="number"
+              id="dlugosc_gornej_zabudowy"
+              type="text"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -813,22 +854,43 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaGorna: {
-                    ...prevState.zabudowaGorna,
-                    "Długość zabudowy ( w centymetrach )": Number(
-                      e.target.value
-                    ),
-                  },
-                }))
+              value={
+                formData.zabudowaGorna[
+                  "Długość zabudowy ( w centymetrach )"
+                ] 
+
               }
+              onChange={(e) => {
+                if (Number(Number(e.target.value).toFixed(2)) < 10000 && countDecimals(e.target.value) < 2) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaGorna: {
+                      ...prevState.zabudowaGorna,
+                      "Długość zabudowy ( w centymetrach )": 
+                        e.target.value
+                      ,
+                    },
+                  }));
+                }
+              }}
             ></input>
-            <label htmlFor="wysokosc_zabudowy">Wysokość zabudowy ( w centymetrach )</label>
+            <label htmlFor="wysokosc_zabudowy">
+              Wysokość zabudowy ( w centymetrach )
+            </label>
             <input
-            id="wysokosc_zabudowy"
-              type="number"
+              id="wysokosc_zabudowy"
+              type="text"
+              disabled={formData.ogólne["Zabudowa do sufitu"]}
+              style={
+                formData.ogólne["Zabudowa do sufitu"]
+                  ? { backgroundColor: "#cdcdcd", cursor: "no-drop" }
+                  : {}
+              }
+              value={
+                formData.zabudowaGorna[
+                  "Wysokość zabudowy ( w centymetrach )"
+                ]
+              }
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -838,23 +900,25 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaGorna: {
-                    ...prevState.zabudowaGorna,
-                    "Wysokość zabudowy ( w centymetrach )": Number(
-                      e.target.value
-                    ),
-                  },
-                }))
-              }
+              onChange={(e) => {
+                if (Number(Number(e.target.value).toFixed(2)) < 10000 && countDecimals(e.target.value) < 2) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaGorna: {
+                      ...prevState.zabudowaGorna,
+                      "Wysokość zabudowy ( w centymetrach )":
+                        e.target.value
+                      ,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="ilosc_szafek">Ilość szafek</label>
             <input
-            id="ilosc_szafek"
-              type="number"
+              id="ilosc_szafek"
+              type="text"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -864,20 +928,25 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaGorna: {
-                    ...prevState.zabudowaGorna,
-                    "Ilość szafek": Number(e.target.value),
-                  },
-                }))
+              value={
+                formData.zabudowaGorna["Ilość szafek"] 
               }
+              onChange={(e) => {
+                if (Number(e.target.value) < 1000) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaGorna: {
+                      ...prevState.zabudowaGorna,
+                      "Ilość szafek": e.target.value,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
             <select
-            id="rodzaj_frontow"
+              id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -900,7 +969,7 @@ export const Quotation = () => {
 
             <label htmlFor="oswietlenie_led">Oświetlenie LED</label>
             <input
-            id="oswietlenie_led"
+              id="oswietlenie_led"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -920,10 +989,12 @@ export const Quotation = () => {
             ref={refHigh}
             className="quotation_calculator_highconstruction_form"
           >
-            <label htmlFor="dlugosc_zabudowy">Długość zabudowy ( w centymetrach )</label>
+            <label htmlFor="dlugosc_zabudowy">
+              Długość zabudowy ( w centymetrach )
+            </label>
             <input
-            id="dlugosc_zabudowy"
-              type="number"
+              id="dlugosc_zabudowy"
+              type="text"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -933,31 +1004,43 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaWysoka: {
-                    ...prevState.zabudowaWysoka,
-                    "Długość zabudowy ( w centymetrach)": Number(
-                      e.target.value
-                    ),
-                  },
-                }))
+              value={
+                formData.zabudowaWysoka[
+                  "Długość zabudowy ( w centymetrach)"
+                ]
               }
+              onChange={(e) => {
+                if (Number(Number(e.target.value).toFixed(2)) < 10000 && countDecimals(e.target.value) < 2) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaWysoka: {
+                      ...prevState.zabudowaWysoka,
+                      "Długość zabudowy ( w centymetrach)":
+                        e.target.value
+                      ,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
-            <label htmlFor="wysokosc_zabudowy">Wysokość zabudowy ( w centymetrach )</label>
+            <label htmlFor="wysokosc_zabudowy">
+              Wysokość zabudowy ( w centymetrach )
+            </label>
             <input
-            id="wysokosc_zabudowy"
+              id="wysokosc_zabudowy"
               disabled={formData.ogólne["Zabudowa do sufitu"]}
-              value={
+              style={
                 formData.ogólne["Zabudowa do sufitu"]
-                  ? formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"]
-                  : formData.zabudowaWysoka[
-                      "Wysokość zabudowy ( w centymetrach)"
-                    ]
+                  ? { backgroundColor: "#cdcdcd", cursor: "no-drop" }
+                  : {}
               }
-              type="number"
+              value={
+                formData.zabudowaWysoka[
+                  "Wysokość zabudowy ( w centymetrach)"
+                ]
+              }
+              type="text"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -967,23 +1050,25 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaWysoka: {
-                    ...prevState.zabudowaWysoka,
-                    "Wysokość zabudowy ( w centymetrach)": Number(
-                      e.target.value
-                    ),
-                  },
-                }))
-              }
+              onChange={(e) => {
+                if (Number(Number(e.target.value).toFixed(2)) < 10000 && countDecimals(e.target.value) < 2) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaWysoka: {
+                      ...prevState.zabudowaWysoka,
+                      "Wysokość zabudowy ( w centymetrach)":
+                        e.target.value
+                      ,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="ilosc_szafek">Ilość szafek</label>
             <input
-            id="ilosc_szafek"
-              type="number"
+              id="ilosc_szafek"
+              type="text"
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -993,21 +1078,27 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaWysoka: {
-                    ...prevState.zabudowaWysoka,
-                    "Ilość szafek": Number(e.target.value),
-                  },
-                }))
+              value={
+                formData.zabudowaWysoka["Ilość szafek"]
               }
+              onChange={(e) => {
+                if (Number(e.target.value) < 1000) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaWysoka: {
+                      ...prevState.zabudowaWysoka,
+                      "Ilość szafek": e.target.value,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="ilosc_szuflad">Ilość szuflad</label>
             <input
-            id="ilosc_szuflad"
-              type="number"
+              id="ilosc_szuflad"
+              type="text"
+              maxLength={4}
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -1017,20 +1108,25 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  zabudowaWysoka: {
-                    ...prevState.zabudowaWysoka,
-                    "Ilość szufled": Number(e.target.value),
-                  },
-                }))
+              value={
+                formData.zabudowaWysoka["Ilość szufled"] 
               }
+              onChange={(e) => {
+                if (Number(e.target.value) < 1000) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    zabudowaWysoka: {
+                      ...prevState.zabudowaWysoka,
+                      "Ilość szufled": e.target.value,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="cargo_wysokie">Cargo wysokie</label>
             <input
-            id="cargo_wysokie"
+              id="cargo_wysokie"
               type="checkbox"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -1045,7 +1141,7 @@ export const Quotation = () => {
 
             <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
             <select
-            id="rodzaj_frontow"
+              id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
@@ -1068,23 +1164,20 @@ export const Quotation = () => {
           </form>
         </div>
         <div className="quotation_calculator_additional">
+          <h3>Transport i montaż</h3>
           <form
             ref={refAdittional}
             className="quotation_calculator_additional_form"
           >
-            <h3>Transport i montaż</h3>
             <label htmlFor="odległosc">
-              Odległość w km od miejscowaści{" "}
+              Odległość w km od miejscowaści {''}
               <a href="https://maps.app.goo.gl/jAbnqcRqexbd3Q387">
                 Małkinia Górna
               </a>
             </label>
 
             <input
-            id="odległosc"
               type="text"
-              pattern="\d*"
-              maxLength={4}
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -1094,26 +1187,38 @@ export const Quotation = () => {
                   { passive: false }
                 )
               }
-              onChange={(e) =>
-                setFormData((prevState) => ({
-                  ...prevState,
-                  transportMontaz: {
-                    ...prevState.transportMontaz,
-                    "Odległość w km": Number(e.target.value),
-                  },
-                }))
+              style={
+                formData.transportMontaz["Opcja montażu"]
+                  ? {} : { backgroundColor: "#cdcdcd", cursor: "no-drop" }
+                  
               }
+              disabled={formData.transportMontaz["Opcja montażu"] ? false: true}
+              value={
+                formData.transportMontaz["Odległość w km"]
+              }
+              onChange={(e) => {
+                if (Number(e.target.value) < 1000) {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    transportMontaz: {
+                      ...prevState.transportMontaz,
+                      "Odległość w km": e.target.value,
+                    },
+                  }));
+                }
+              }}
             ></input>
 
             <label htmlFor="opcja_montazu">Opcja montażu</label>
             <input
-            id="opcja_montazu"
+              id="opcja_montazu"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,
                   transportMontaz: {
                     ...prevState.transportMontaz,
                     "Opcja montażu": Boolean(e.target.checked),
+                    "Odległość w km": '',
                   },
                 }))
               }
@@ -1122,12 +1227,6 @@ export const Quotation = () => {
           </form>
         </div>
         <div className="quotation_calculator_summary">
-          {/* <button
-            className="quotation_calculator_summary_button"
-            onClick={click}
-          >
-            Wyślij swoją wycenę, oddzwonimy do Ciebie
-          </button> */}
           <div className="quotation_calculator_summary_price">
             <p key={summaryPrice} className="roll-out">
               {numberWithSpaces(summaryPrice)} zł
@@ -1136,59 +1235,6 @@ export const Quotation = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="centered-fixed-div">
-        <span onClick={close} className="centered-fixed-div-close">
-          X
-        </span>
-
-        <h3>Wyślij wycenę</h3>
-
-        <span>
-          Prześlij nam swoją wycenę. Po zweryfikowaniu skontaktujemy się w celu
-          omówienia dalszej współpracy.
-        </span>
-
-        <form>
-          <div className="centered-fixed-div_form_box">
-            <label>Imię i Nazwisko</label>
-            <input
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-            ></input>
-          </div>
-
-          <div className="centered-fixed-div_form_box">
-            <label>Adres e-mail</label>
-            <input
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-          </div>
-
-          <div className="centered-fixed-div_form_box">
-            <label>Numer telefonu</label>
-            <input
-              type="number"
-              onChange={(e) => setPhone(e.target.value)}
-            ></input>
-          </div>
-
-          <div className="centered-fixed-div_form_box">
-            <label>Dodatkowe informacje</label>
-            <textarea onChange={(e) => setMessage(e.target.value)}></textarea>
-          </div>
-
-          <button
-            className="centered-fixed-div_button"
-            onClick={(e) => sendForm(e)}
-          >
-            Wyślij
-          </button>
-        </form>
-
-        <span></span>
-      </div> */}
-    </div>
+    </motion.div>
   );
 };

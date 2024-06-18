@@ -3,6 +3,8 @@ import "../assets/style/contact.scss";
 
 import emailjs from "emailjs-com";
 
+import { easeOut, motion } from "framer-motion";
+
 import { ReactComponent as FacebookSvg } from "../assets/img/facebook.svg";
 import { ReactComponent as InstagramSvg } from "../assets/img/instagram.svg";
 
@@ -144,7 +146,9 @@ export const Contact = () => {
   };
 
   return (
-    <div className="contact">
+    <motion.div className="contact" initial={{x:100, opacity:0}}
+    animate={{ x: 0, opacity:1 }}
+    transition={{ duration: .3, ease: easeOut }}>
       <div className="contact_map">
         <iframe
           id="map"
@@ -270,6 +274,6 @@ export const Contact = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -3,6 +3,8 @@ import { useEffect } from "react";
 
 import FsLightbox from "fslightbox-react";
 
+import { easeOut, motion } from "framer-motion";
+
 import Macy from "macy";
 
 import { AsyncImage } from 'loadable-image'
@@ -40,7 +42,9 @@ export const Realization = () => {
   }
 
   return (
-    <div className="realization">
+    <motion.div className="realization"  initial={{x:100, opacity:0}}
+    animate={{ x: 0, opacity:1 }}
+    transition={{ duration: .3, ease: easeOut }}>
       <div className="realization_hero">
         <h1>Meble kuchenne na zamówienie</h1>
         <p>
@@ -75,6 +79,6 @@ export const Realization = () => {
           sources={images}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
