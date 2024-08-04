@@ -10,7 +10,7 @@
     margin: 0 auto;
     margin-top: 40px;
     font-family: 'Montserrat', sans-serif;
-    margin-top:120px;
+    margin-top:100px;
     margin-bottom: 50px;
 
     &::after {
@@ -92,7 +92,7 @@
 @media screen and (max-width: 900px) {
     .header {
         flex-direction: column-reverse;
-        margin-top: 80px;
+        margin-top: 70px;
         margin-bottom: 0;
 
         &::after {

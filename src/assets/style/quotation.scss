@@ -1,9 +1,9 @@
 @import "./colors.scss";
 
 .quotation {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  margin-top: 180px;
+  margin-top: 150px;
   width: 100%;
   font-family: "Montserrat", sans-serif;
 
@@ -45,7 +45,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      height: 100px;
+      height: 120px;
       width: 100%;
       padding-right: 30px;
       background-color: $ctaColor;
@@ -63,12 +63,36 @@
       }
 
       &_price {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100%;
+        flex-direction: column;
+        padding: 20px;
+        background-color: #fff;
+
 
         p {
           font-size: 30px;
+          width: 100%;
+          color: $ctaColor;
+          padding: 10px 0;
+
+          &::after{
+            content: '';
+            display: block;
+            height: 2px;
+            width: 100%;
+            transform: translateY(5px);
+            background-color:#8888;
+            z-index: 1000;
+          }
         }
         span {
+          color: $ctaColor;
+          padding: 5px 0;
           font-size: 15px;
+          transition: .2s;
         }
       }
     }
@@ -102,6 +126,29 @@
       &_highconstruction,
       &_additional {
         width: 100%;
+      }
+      &_summary {
+
+        height: 100px;
+        padding: 0;
+
+
+        &_price{
+          display: flex;
+
+          align-items: flex-end;
+          padding: 40px;
+          width: 100%;
+
+          p {
+            padding: 5px 0;
+            text-align: right;
+          }
+
+          span {
+            padding: 6px 0;
+          }
+        }
       }
     }
     &_photo {
@@ -213,14 +260,11 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-.animated {
-
-}
 
 @keyframes rollout {
-  0% { transform: translateY(-100px);
+  0% { 
         opacity: 0; }
-  100% { transform: none; }
+  100% {  }
 }
 
 .roll-out {

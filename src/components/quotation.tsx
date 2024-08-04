@@ -545,6 +545,9 @@ export const Quotation = () => {
     };
 
     const summaryprice = () => {
+
+      validInput()
+
       return (
         Math.ceil(
           (bodyPlate() +
@@ -583,6 +586,97 @@ export const Quotation = () => {
     return parts.length > 1 ? parts[1].length - 1 : 0;
   };
 
+  const validInput = () => {
+
+    // Szukam inputów które będą validowane 
+    const xc = formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"]
+    const xc1 = formData.ogólne["Rodzaj płyty na korpus szafek"]
+
+    const xc51 = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
+    const xc551 = formData.zabudowaDolna["Ilość szafek"]
+    const xc5561 = formData.zabudowaDolna["Ilość szuflad"]
+    const xc75561 = formData.zabudowaDolna["Rodzaj frontów"]
+
+    const fewd = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
+    const f34ewd = formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]
+    const f434ewd = formData.zabudowaGorna["Ilość szafek"]
+    const fe334wd = formData.zabudowaGorna["Rodzaj frontów"]
+
+    const fewwqef = formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]
+    const wfewf = formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]
+    const wfewwf = formData.zabudowaWysoka["Ilość szafek"]
+    const wfewsdwf = formData.zabudowaWysoka["Ilość szufled"]
+    const wfewdwf = formData.zabudowaWysoka["Rodzaj frontów"]
+
+    const inputs = document.querySelectorAll('[data-validation]');
+
+    let rrr: string[]
+
+    let err = 0
+
+
+    inputs.forEach( (item) => {
+      console.log(inputs)
+
+      if ((item as HTMLInputElement).type  === 'number') {
+
+        if (Number((item as HTMLInputElement).value) > 0) {
+          err++
+        }
+
+      } else if ((item as HTMLInputElement).type  === 'select-one') {
+
+        if ((item as HTMLInputElement).value !== '') {
+          err++
+        }
+
+      }  else if ((item as HTMLInputElement).type  === 'select') {
+
+
+
+      }
+
+
+
+
+      
+      
+      if (Number((item as HTMLInputElement).value) > 0) {
+        err++
+      }
+      
+
+      
+      
+    })
+    
+    if (err === 15) {
+
+      const kkk = document.querySelector('.quotation_calculator_summary_price span:nth-child(2)') as HTMLElement
+
+      console.log(kkk)
+    
+      if (kkk) {
+        kkk.style.opacity = "0";
+    }
+    } else {
+      
+
+      const kkk = document.querySelector('.quotation_calculator_summary_price span:nth-child(2)') as HTMLElement
+
+      console.log(kkk)
+    
+      if (kkk) {
+        kkk.style.opacity = "1";
+    }
+
+    }
+
+
+
+
+  }
+
 
   return (
     <motion.div
@@ -605,10 +699,10 @@ export const Quotation = () => {
 
           <form className="quotation_calculator_upperconstruction_form">
             <label htmlFor="wysokosc_pomieszczenia">
-              Wysokość pomieszczenia ( w centymetrach )
+              Wysokość pomieszczenia ( w centymetrach ) *
             </label>
             <input
-              data-test="valid"
+              data-validation
               type="text"
               inputMode="numeric"
               onFocus={(e) =>
@@ -702,9 +796,10 @@ export const Quotation = () => {
             />
 
             <label htmlFor="rodzaj_plyty_na_korpusy_szafek">
-              Rodzaj płyty na korpusy szafek
+              Rodzaj płyty na korpusy szafek *
             </label>
             <select
+            data-validation
               id="rodzaj_plyty_na_korpusy_szafek"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -731,9 +826,10 @@ export const Quotation = () => {
             className="quotation_calculator_upperconstruction_form"
           >
             <label htmlFor="dlugość_dolnej_zabudowy">
-              Długość dolnej zabudowy ( w centymetrach )
+              Długość dolnej zabudowy ( w centymetrach ) *
             </label>
             <input
+            data-validation
               id="dlugość_dolnej_zabudowy"
               type="text"
               inputMode="numeric"
@@ -765,8 +861,9 @@ export const Quotation = () => {
               }}
             ></input>
 
-            <label htmlFor="ilość_szafek">Ilość szafek</label>
+            <label htmlFor="ilość_szafek">Ilość szafek *</label>
             <input
+            data-validation
               id="ilość_szafek"
               type="text"
               inputMode="numeric"
@@ -781,9 +878,7 @@ export const Quotation = () => {
               }
               value={formData.zabudowaDolna["Ilość szafek"]}
               onChange={(e) => {
-                console.log(e.target.value[e.target.value.length - 1])
                 if (Number(e.target.value) < 1000 && e.target.value[e.target.value.length - 1] !== '.') {
-                  console.log('dff')
                   setFormData((prevState) => ({
                     ...prevState,
                     zabudowaDolna: {
@@ -795,8 +890,9 @@ export const Quotation = () => {
               }}
             ></input>
 
-            <label htmlFor="ilosc_szuflad">Ilość szuflad</label>
+            <label htmlFor="ilosc_szuflad">Ilość szuflad *</label>
             <input
+            data-validation
               id="ilosc_szuflad"
               type="text"
               inputMode="numeric"
@@ -838,8 +934,9 @@ export const Quotation = () => {
               }
             />
 
-            <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
+            <label htmlFor="rodzaj_frontow">Rodzaj frontów *</label>
             <select
+            data-validation
               id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -888,9 +985,10 @@ export const Quotation = () => {
             className="quotation_calculator_upperconstruction_form"
           >
             <label htmlFor="dlugosc_gornej_zabudowy">
-              Długość górnej zabudowy ( w centymetrach )
+              Długość górnej zabudowy ( w centymetrach ) *
             </label>
             <input
+            data-validation
               id="dlugosc_gornej_zabudowy"
               type="text"
               inputMode="numeric"
@@ -922,9 +1020,10 @@ export const Quotation = () => {
               }}
             ></input>
             <label htmlFor="wysokosc_zabudowy">
-              Wysokość zabudowy ( w centymetrach )
+              Wysokość zabudowy ( w centymetrach ) *
             </label>
             <input
+            data-validation
               id="wysokosc_zabudowy"
               type="text"
               inputMode="numeric"
@@ -962,8 +1061,9 @@ export const Quotation = () => {
               }}
             ></input>
 
-            <label htmlFor="ilosc_szafek">Ilość szafek</label>
+            <label htmlFor="ilosc_szafek">Ilość szafek *</label>
             <input
+            data-validation
               id="ilosc_szafek"
               type="text"
               inputMode="numeric"
@@ -990,8 +1090,9 @@ export const Quotation = () => {
               }}
             ></input>
 
-            <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
+            <label htmlFor="rodzaj_frontow">Rodzaj frontów *</label>
             <select
+            data-validation
               id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -1036,9 +1137,10 @@ export const Quotation = () => {
             className="quotation_calculator_highconstruction_form"
           >
             <label htmlFor="dlugosc_zabudowy">
-              Długość zabudowy ( w centymetrach )
+              Długość zabudowy ( w centymetrach ) *
             </label>
             <input
+            data-validation
               id="dlugosc_zabudowy"
               type="text"
               inputMode="numeric"
@@ -1071,9 +1173,10 @@ export const Quotation = () => {
             ></input>
 
             <label htmlFor="wysokosc_zabudowy">
-              Wysokość zabudowy ( w centymetrach )
+              Wysokość zabudowy ( w centymetrach ) *
             </label>
             <input
+            data-validation
               id="wysokosc_zabudowy"
               inputMode="numeric"
               disabled={formData.ogólne["Zabudowa do sufitu"]}
@@ -1111,8 +1214,9 @@ export const Quotation = () => {
               }}
             ></input>
 
-            <label htmlFor="ilosc_szafek">Ilość szafek</label>
+            <label htmlFor="ilosc_szafek">Ilość szafek *</label>
             <input
+            data-validation
               id="ilosc_szafek"
               type="text"
               inputMode="numeric"
@@ -1139,8 +1243,9 @@ export const Quotation = () => {
               }}
             ></input>
 
-            <label htmlFor="ilosc_szuflad">Ilość szuflad</label>
+            <label htmlFor="ilosc_szuflad">Ilość szuflad *</label>
             <input
+            data-validation
               id="ilosc_szuflad"
               type="text"
               inputMode="numeric"
@@ -1182,8 +1287,9 @@ export const Quotation = () => {
               }
             />
 
-            <label htmlFor="rodzaj_frontow">Rodzaj frontów</label>
+            <label htmlFor="rodzaj_frontow">Rodzaj frontów *</label>
             <select
+            data-validation
               id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -1264,8 +1370,9 @@ export const Quotation = () => {
         <div className="quotation_calculator_summary">
           <div className="quotation_calculator_summary_price">
             <p key={summaryPrice} className="roll-out">
-              {numberWithSpaces(summaryPrice)} zł
+            {Number((summaryPrice)) > 0 ? `${numberWithSpaces(summaryPrice)} zł` : '-'}
             </p>
+
             <span>Wprowadź wymagane pola </span>
             <span>* wycena nie stanowi oferty handlowej</span>
           </div>
