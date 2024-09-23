@@ -1,7 +1,7 @@
 {
   "name": "pol-mebel",
   "version": "0.1.0",
-  "homepage": "https://rb314.github.io/pol-mebel",
+  "homepage":".",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",

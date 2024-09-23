@@ -545,8 +545,7 @@ export const Quotation = () => {
     };
 
     const summaryprice = () => {
-
-      validInput()
+      validInput();
 
       return (
         Math.ceil(
@@ -588,95 +587,46 @@ export const Quotation = () => {
 
   const validInput = () => {
 
-    // Szukam inputów które będą validowane 
-    const xc = formData.ogólne["Wysokosc pomieszczenia ( w centymetrach )"]
-    const xc1 = formData.ogólne["Rodzaj płyty na korpus szafek"]
+    // Szukam inputów które będą validowane
+    const inputs = document.querySelectorAll("[data-validation]");
 
-    const xc51 = formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
-    const xc551 = formData.zabudowaDolna["Ilość szafek"]
-    const xc5561 = formData.zabudowaDolna["Ilość szuflad"]
-    const xc75561 = formData.zabudowaDolna["Rodzaj frontów"]
+    let err = 0;
 
-    const fewd = formData.zabudowaGorna["Długość zabudowy ( w centymetrach )"]
-    const f34ewd = formData.zabudowaGorna["Wysokość zabudowy ( w centymetrach )"]
-    const f434ewd = formData.zabudowaGorna["Ilość szafek"]
-    const fe334wd = formData.zabudowaGorna["Rodzaj frontów"]
-
-    const fewwqef = formData.zabudowaWysoka["Długość zabudowy ( w centymetrach)"]
-    const wfewf = formData.zabudowaWysoka["Wysokość zabudowy ( w centymetrach)"]
-    const wfewwf = formData.zabudowaWysoka["Ilość szafek"]
-    const wfewsdwf = formData.zabudowaWysoka["Ilość szufled"]
-    const wfewdwf = formData.zabudowaWysoka["Rodzaj frontów"]
-
-    const inputs = document.querySelectorAll('[data-validation]');
-
-    let rrr: string[]
-
-    let err = 0
-
-
-    inputs.forEach( (item) => {
-      console.log(inputs)
-
-      if ((item as HTMLInputElement).type  === 'number') {
-
+    inputs.forEach((item) => {
+      if ((item as HTMLInputElement).type === "number") {
         if (Number((item as HTMLInputElement).value) > 0) {
-          err++
+          err++;
         }
-
-      } else if ((item as HTMLInputElement).type  === 'select-one') {
-
-        if ((item as HTMLInputElement).value !== '') {
-          err++
+      } else if ((item as HTMLInputElement).type === "select-one") {
+        if ((item as HTMLInputElement).value !== "") {
+          err++;
         }
-
-      }  else if ((item as HTMLInputElement).type  === 'select') {
-
-
-
+      } else if ((item as HTMLInputElement).type === "select") {
       }
 
-
-
-
-      
-      
       if (Number((item as HTMLInputElement).value) > 0) {
-        err++
+        err++;
       }
-      
+    });
 
-      
-      
-    })
-    
     if (err === 15) {
+      const kkk = document.querySelector(
+        ".quotation_calculator_summary_price span:nth-child(2)"
+      ) as HTMLElement;
 
-      const kkk = document.querySelector('.quotation_calculator_summary_price span:nth-child(2)') as HTMLElement
-
-      console.log(kkk)
-    
       if (kkk) {
         kkk.style.opacity = "0";
-    }
+      }
     } else {
-      
+      const kkk = document.querySelector(
+        ".quotation_calculator_summary_price span:nth-child(2)"
+      ) as HTMLElement;
 
-      const kkk = document.querySelector('.quotation_calculator_summary_price span:nth-child(2)') as HTMLElement
-
-      console.log(kkk)
-    
       if (kkk) {
         kkk.style.opacity = "1";
+      }
     }
-
-    }
-
-
-
-
-  }
-
+  };
 
   return (
     <motion.div
@@ -799,7 +749,7 @@ export const Quotation = () => {
               Rodzaj płyty na korpusy szafek *
             </label>
             <select
-            data-validation
+              data-validation
               id="rodzaj_plyty_na_korpusy_szafek"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -829,7 +779,7 @@ export const Quotation = () => {
               Długość dolnej zabudowy ( w centymetrach ) *
             </label>
             <input
-            data-validation
+              data-validation
               id="dlugość_dolnej_zabudowy"
               type="text"
               inputMode="numeric"
@@ -863,7 +813,7 @@ export const Quotation = () => {
 
             <label htmlFor="ilość_szafek">Ilość szafek *</label>
             <input
-            data-validation
+              data-validation
               id="ilość_szafek"
               type="text"
               inputMode="numeric"
@@ -878,7 +828,10 @@ export const Quotation = () => {
               }
               value={formData.zabudowaDolna["Ilość szafek"]}
               onChange={(e) => {
-                if (Number(e.target.value) < 1000 && e.target.value[e.target.value.length - 1] !== '.') {
+                if (
+                  Number(e.target.value) < 1000 &&
+                  e.target.value[e.target.value.length - 1] !== "."
+                ) {
                   setFormData((prevState) => ({
                     ...prevState,
                     zabudowaDolna: {
@@ -892,7 +845,7 @@ export const Quotation = () => {
 
             <label htmlFor="ilosc_szuflad">Ilość szuflad *</label>
             <input
-            data-validation
+              data-validation
               id="ilosc_szuflad"
               type="text"
               inputMode="numeric"
@@ -907,7 +860,10 @@ export const Quotation = () => {
               }
               value={formData.zabudowaDolna["Ilość szuflad"]}
               onChange={(e) => {
-                if (Number(e.target.value) < 1000 && e.target.value[e.target.value.length - 1] !== '.') {
+                if (
+                  Number(e.target.value) < 1000 &&
+                  e.target.value[e.target.value.length - 1] !== "."
+                ) {
                   setFormData((prevState) => ({
                     ...prevState,
                     zabudowaDolna: {
@@ -936,7 +892,7 @@ export const Quotation = () => {
 
             <label htmlFor="rodzaj_frontow">Rodzaj frontów *</label>
             <select
-            data-validation
+              data-validation
               id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -988,7 +944,7 @@ export const Quotation = () => {
               Długość górnej zabudowy ( w centymetrach ) *
             </label>
             <input
-            data-validation
+              data-validation
               id="dlugosc_gornej_zabudowy"
               type="text"
               inputMode="numeric"
@@ -1023,7 +979,7 @@ export const Quotation = () => {
               Wysokość zabudowy ( w centymetrach ) *
             </label>
             <input
-            data-validation
+              data-validation
               id="wysokosc_zabudowy"
               type="text"
               inputMode="numeric"
@@ -1063,7 +1019,7 @@ export const Quotation = () => {
 
             <label htmlFor="ilosc_szafek">Ilość szafek *</label>
             <input
-            data-validation
+              data-validation
               id="ilosc_szafek"
               type="text"
               inputMode="numeric"
@@ -1078,7 +1034,10 @@ export const Quotation = () => {
               }
               value={formData.zabudowaGorna["Ilość szafek"]}
               onChange={(e) => {
-                if (Number(e.target.value) < 1000 && e.target.value[e.target.value.length - 1] !== '.') {
+                if (
+                  Number(e.target.value) < 1000 &&
+                  e.target.value[e.target.value.length - 1] !== "."
+                ) {
                   setFormData((prevState) => ({
                     ...prevState,
                     zabudowaGorna: {
@@ -1092,7 +1051,7 @@ export const Quotation = () => {
 
             <label htmlFor="rodzaj_frontow">Rodzaj frontów *</label>
             <select
-            data-validation
+              data-validation
               id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -1140,7 +1099,7 @@ export const Quotation = () => {
               Długość zabudowy ( w centymetrach ) *
             </label>
             <input
-            data-validation
+              data-validation
               id="dlugosc_zabudowy"
               type="text"
               inputMode="numeric"
@@ -1176,7 +1135,7 @@ export const Quotation = () => {
               Wysokość zabudowy ( w centymetrach ) *
             </label>
             <input
-            data-validation
+              data-validation
               id="wysokosc_zabudowy"
               inputMode="numeric"
               disabled={formData.ogólne["Zabudowa do sufitu"]}
@@ -1216,7 +1175,7 @@ export const Quotation = () => {
 
             <label htmlFor="ilosc_szafek">Ilość szafek *</label>
             <input
-            data-validation
+              data-validation
               id="ilosc_szafek"
               type="text"
               inputMode="numeric"
@@ -1231,7 +1190,10 @@ export const Quotation = () => {
               }
               value={formData.zabudowaWysoka["Ilość szafek"]}
               onChange={(e) => {
-                if (Number(e.target.value) < 1000 && e.target.value[e.target.value.length - 1] !== '.') {
+                if (
+                  Number(e.target.value) < 1000 &&
+                  e.target.value[e.target.value.length - 1] !== "."
+                ) {
                   setFormData((prevState) => ({
                     ...prevState,
                     zabudowaWysoka: {
@@ -1245,7 +1207,7 @@ export const Quotation = () => {
 
             <label htmlFor="ilosc_szuflad">Ilość szuflad *</label>
             <input
-            data-validation
+              data-validation
               id="ilosc_szuflad"
               type="text"
               inputMode="numeric"
@@ -1289,7 +1251,7 @@ export const Quotation = () => {
 
             <label htmlFor="rodzaj_frontow">Rodzaj frontów *</label>
             <select
-            data-validation
+              data-validation
               id="rodzaj_frontow"
               onChange={(e) =>
                 setFormData((prevState) => ({
@@ -1370,7 +1332,9 @@ export const Quotation = () => {
         <div className="quotation_calculator_summary">
           <div className="quotation_calculator_summary_price">
             <p key={summaryPrice} className="roll-out">
-            {Number((summaryPrice)) > 0 ? `${numberWithSpaces(summaryPrice)} zł` : '-'}
+              {Number(summaryPrice) > 0
+                ? `${numberWithSpaces(summaryPrice)} zł`
+                : "-"}
             </p>
 
             <span>Wprowadź wymagane pola </span>

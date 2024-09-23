@@ -14,6 +14,7 @@ export const Realization = () => {
   useEffect(() => {
     require("fslightbox");
 
+    // eslint-disable-next-line no-unused-vars
     const macy = Macy({
       container: ".realization_gallery",
       trueOrder: false,
@@ -31,10 +32,6 @@ export const Realization = () => {
 
   const images = importAll(
     require.context("../assets/img/realization", false, /\.(png|jpe?g|svg|webp)$/)
-  );
-
-  const imagesMini = importAll(
-    require.context("../assets/img/realization/mini", false, /\.(png|jpe?g|svg|webp)$/)
   );
 
   function importAll(r) {
@@ -56,13 +53,14 @@ export const Realization = () => {
       </div>
 
       <div className="realization_gallery">
+        
         {images.map((imagePath, index) => (
           <>
           {/* <a key={imagePath} data-fslightbox="gallery" href={imagePath}>
             <img key={imagePath} src={imagesMini[index]} alt="Zdjęcie mebli kuchennych" />
             </a> */}
 
-            <a data-fslightbox="gallery" href={imagePath}>
+            <a key={index} data-fslightbox="gallery" href={imagePath}>
             <AsyncImage
                     key={index}
                     src={imagePath}

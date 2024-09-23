@@ -16,12 +16,11 @@ const AdminPanel = () => {
   const [database, setDatabase] = useState<any>([]);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [test, setTest] = useState<any>("");
 
   let ur: any = [];
 
   useEffect(() => {
-    if (localStorage.getItem("key") != "") {
+    if (localStorage.getItem("key") !== "") {
       setUserid(localStorage.getItem("key")?.toString());
     }
   }, []);
@@ -68,7 +67,7 @@ const AdminPanel = () => {
     
     const washingtonRef = doc(db, "database", h1);
 
-    if (inputValue != 0) {
+    if (inputValue !== 0) {
       await updateDoc(washingtonRef, {
         [li]: Number(inputValue),
       });
@@ -124,7 +123,7 @@ const AdminPanel = () => {
                     {Object.keys(posortowanyObiekt).map((e, index) => {
                       return (
                         <>
-                          {e != "id" ? (
+                          {e !== "id" ? (
                             <div key={e} className="section_item">
                             <div id={e}><label key={e}>{e}</label><span>{`: ${item[e]} zł`}</span></div>
                               <input type='number'></input>
