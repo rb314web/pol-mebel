@@ -29,7 +29,7 @@ export const Navigation = () => {
 
           <ul className="navigation_wrapper_list">
             <li className="navigation_wrapper_list_item">
-              <Link to="/">Strona Główna123</Link>
+              <Link to="/">Strona Główna1234</Link>
             </li>
             {/* <li className="navigation_wrapper_list_item">
               <Link to="/offer">Oferta</Link>
