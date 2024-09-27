@@ -7,12 +7,12 @@ import { getFirestore} from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDERID,
-  appId: process.env.REACT_APP_APP_ID,
+  apiKey: "AIzaSyAbgEMjwU_RLJKGFUm3E7iMYLVKhP0qLdE",
+  authDomain: "pol-mebel-c69ce.firebaseapp.com",
+  projectId: "pol-mebel-c69ce",
+  storageBucket: "pol-mebel-c69ce.appspot.com",
+  messagingSenderId: "548570055197",
+  appId: "1:548570055197:web:be075af4cf6f19fe6abcf4"
 };
 
 // Initialize Firebase
