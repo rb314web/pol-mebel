@@ -31,9 +31,6 @@ export const Navigation = () => {
             <li className="navigation_wrapper_list_item">
               <Link to="/">Strona Główna</Link>
             </li>
-            {/* <li className="navigation_wrapper_list_item">
-              <Link to="/offer">Oferta</Link>
-            </li> */}
             <li className="navigation_wrapper_list_item">
               <Link to="/realization">Realizacje</Link>
             </li>
