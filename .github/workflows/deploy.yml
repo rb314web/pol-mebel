@@ -1,41 +1,41 @@
-on: push
-name: 🚀 Deploy website on push
+name: Deploy React App
+
+on:
+  push:
+    branches:
+      - main  # Or your desired branch
+
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: 🚚 Get latest code
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Use Node.js 18
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18.17.1'
-      
-    - name: 🔨 Build Project
-      run: |
-        npm install
-        npm run build
-    
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build the project
+      run: npm run build
+      env:
+        REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+
     - name: List output files
       run: find build/ -print
       
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-          server: ${{ secrets.FTP_HOST4 }} 
+          server: ${{ secrets.FTP_HOST }} 
           username: ${{ secrets.FTP_LOGIN }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ./
           local-dir: build/
-
-
-
-        
-
-
-
-
 
 
