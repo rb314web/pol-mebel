@@ -12,13 +12,6 @@ const storageBucket = process.env.REACT_APP_STORAGE_BUCKET_EXT;
 const messagingSenderId = process.env.REACT_APP_MESSAGING_SENDER_ID_EXT;
 const appId = process.env.REACT_APP_APP_ID_EXT;
 
-console.log(  apiKey,
-  authDomain,
-  projectId,
-  storageBucket,
-  messagingSenderId,
-  appId)
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey,
