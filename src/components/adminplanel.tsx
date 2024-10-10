@@ -77,12 +77,10 @@ const AdminPanel = () => {
   };
 
   const signOutUser = () => {
-    console.log(ur);
 
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        console.log("232323232");
         localStorage.setItem("key", "");
         setUserid("");
       })
