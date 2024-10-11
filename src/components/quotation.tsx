@@ -569,7 +569,6 @@ export const Quotation = () => {
         ) / 100
       );
     };
-
     setSummaryPrice(summaryprice());
 
     return summaryprice() >= 0 ? summaryprice() : "Błąd";
