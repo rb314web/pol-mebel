@@ -11,7 +11,7 @@ export const About = () => {
   return (
     <div className="about">
       <h2 data-aos="fade-down" data-aos-duration="1000">
-        Trochę o Nas
+        Trochę o nas
       </h2>
 
       <div className="about_content">
