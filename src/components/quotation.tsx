@@ -101,6 +101,7 @@ export const Quotation = () => {
         data.push({ ...doc.data(), id: doc.id });
       });
       setDatabase(data);
+      console.log(data)
     });
 
     return () => unsuscribe();
