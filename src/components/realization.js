@@ -61,7 +61,7 @@ export const Realization = () => {
                     key={index}
                     src={imagePath}
                     alt='Zdjęcie realizacji'
-                    style={{  borderRadius: 3, height: 60 }}
+                    style={{  borderRadius: 3, height: 500 }}
                     loader={<div style={{ background: '#888' }} />}
                 />
         </a>
