@@ -56,10 +56,6 @@ export const Realization = () => {
         
         {images.map((imagePath, index) => (
           <>
-          {/* <a key={imagePath} data-fslightbox="gallery" href={imagePath}>
-            <img key={imagePath} src={imagesMini[index]} alt="Zdjęcie mebli kuchennych" />
-            </a> */}
-
             <a key={index} data-fslightbox="gallery" href={imagePath}>
             <AsyncImage
                     key={index}
