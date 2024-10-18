@@ -15,17 +15,6 @@
   font-family: "Montserrat", sans-serif;
   margin-top: 50px;
 
-  // &::after {
-  //   content: "";
-  //   position: absolute;
-  //   display: block;
-  //   bottom: -50px;
-  //   top: -50px;
-  //   border-top: 1px solid #e1e1e1;
-  //   margin: 0 40px;
-  //   width: calc(100% - 80px);
-  // }
-
   &::after {
     position: absolute;
     top: 30px;

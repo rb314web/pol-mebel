@@ -32,7 +32,7 @@ export const Footer = () => {
         </div>
 
         <div className="footer_copyright">
-          <p>Copyright © {year()} pol-mebel.pl. Wszelkie prawa zastrzeżone.</p>
+          <p>Copyright © {year()} www.polmebel.pl. Wszelkie prawa zastrzeżone.</p>
         </div>
       </div>
     </>
