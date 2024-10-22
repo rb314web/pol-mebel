@@ -36,7 +36,7 @@ export const Card = () => {
           <div className="card">
             <div className="content">
               <p className="logo">Jakość</p>
-              <div className="h6"><span style={{whiteSpace: 'pre-line'}}>Wieloletnie doświadczenie</span></div>
+              <div className="h6"><span style={{whiteSpace: 'pre-line'}}>Wieloletnie <br/> doświadczenie</span></div>
               <div className="hover_content">
                 <p>
                 Wykonujemy meble z trwałych materiałów które będą służyć Ci przez wiele lat.
