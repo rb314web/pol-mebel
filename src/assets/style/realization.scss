@@ -60,6 +60,11 @@
 @media screen and (max-width: 900px) {
 
   .realization {
+    
+    &_gallery {
+      margin: 20px;
+    }
+
     &_hero {
       justify-content: center;
       align-items: center;
@@ -79,10 +84,6 @@
 @media screen and (max-width: 478px) {
 
   .realization {
-
-    &_gallery {
-      margin: 20px;
-    }
     
     &_hero {
       justify-content: center;
