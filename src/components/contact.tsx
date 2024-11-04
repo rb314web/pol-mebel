@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../assets/style/contact.scss";
 
+import ReCAPTCHA from 'react-google-recaptcha';
 import emailjs from "emailjs-com";
 
 import { easeOut, motion } from "framer-motion";
@@ -233,6 +234,11 @@ export const Contact = () => {
               id="user_message"
             />
           </div>
+
+          <ReCAPTCHA
+        sitekey={process.env.REACT_APP_CAPTCHA_API_KEY_EXT}
+        onChange={console.log('działa')}
+      />
 
           <button className="contact_forminfo_form_button" type="submit">
             Wyślij
