@@ -52,8 +52,6 @@ export const Contact = () => {
 
       let error = 0;
 
-      console.log(document.querySelectorAll(".contact_form_box"));
-
       // document
       //   .querySelectorAll(".contact_form_box_input")
       //   .forEach((item: any) => {
@@ -93,6 +91,10 @@ export const Contact = () => {
       }
       if (!message) {
         // e.target.lastChild.form[4].style.border = "1px solid red";
+        error++;
+        showError(e, 4, "Pole jest wymagane");
+      }
+      if (!captchaValue) {
         error++;
         showError(e, 4, "Pole jest wymagane");
       }
