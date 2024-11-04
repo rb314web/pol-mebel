@@ -250,7 +250,7 @@ export const Contact = () => {
           <ReCAPTCHA
         sitekey={apikey}
         onChange={onCaptchaChange}
-        lang="pl"
+        hl="pl"
       />
 
           <button className="contact_forminfo_form_button" type="submit">
