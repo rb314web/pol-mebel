@@ -15,8 +15,14 @@ export const Contact = () => {
   const [subject, setSubject] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [captchaValue, setCaptchaValue] = useState(null);
 
   const apikey: string = process.env.REACT_APP_CAPTCHA_API_KEY_EXT!
+
+  const onCaptchaChange = (value:any) => {
+    console.log("Captcha value:", value);
+    setCaptchaValue(value);
+  };
 
   const sendEmail = (e: any) => {
     // Wyłączenie domyślnego odświeżania strony
@@ -239,7 +245,7 @@ export const Contact = () => {
 
           <ReCAPTCHA
         sitekey={apikey}
-
+        onChange={onCaptchaChange}
       />
 
           <button className="contact_forminfo_form_button" type="submit">
