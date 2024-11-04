@@ -17,7 +17,7 @@ export const Contact = () => {
   const [message, setMessage] = useState("");
   const [captchaValue, setCaptchaValue] = useState(null);
 
-  const apikey: string = process.env.REACT_APP_CAPTCHA_API_KEY_EXT!
+  const apikey: string = process.env.REACT_APP_CAPTCHA_API_KEY_EXT!.toString()
 
   const onCaptchaChange = (value:any) => {
     console.log("Captcha value:", value);
