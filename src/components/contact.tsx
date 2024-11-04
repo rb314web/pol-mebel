@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../assets/style/contact.scss";
 
-import ReCAPTCHA from 'react-google-recaptcha';
+import ReCAPTCHA from "react-google-recaptcha";
 import emailjs from "emailjs-com";
 
 import { easeOut, motion } from "framer-motion";
@@ -17,10 +17,9 @@ export const Contact = () => {
   const [message, setMessage] = useState("");
   const [captchaValue, setCaptchaValue] = useState(null);
 
-  const apikey: string = process.env.REACT_APP_CAPTCHA_API_KEY_EXT!.toString()
+  const apikey: string = process.env.REACT_APP_CAPTCHA_API_KEY_EXT!.toString();
 
-  const onCaptchaChange = (value:any) => {
-    console.log("Captcha value:", value);
+  const onCaptchaChange = (value: any) => {
     setCaptchaValue(value);
   };
 
@@ -29,14 +28,13 @@ export const Contact = () => {
     e.preventDefault();
 
     const showError = (element: any, id: number, text: string) => {
-
       // Tworzę element span
       const span = document.createElement("span");
 
       // Dodaję do stworzonego elementu spam klasę test
       span.classList.add("test");
 
-      // Dodaję do elementu zawartość z podaną w parametrach 
+      // Dodaję do elementu zawartość z podaną w parametrach
       span.innerText = text;
 
       // Dodaję delement na stronę
@@ -157,9 +155,12 @@ export const Contact = () => {
   };
 
   return (
-    <motion.div className="contact" initial={{x:100, opacity:0}}
-    animate={{ x: 0, opacity:1 }}
-    transition={{ duration: .3, ease: easeOut }}>
+    <motion.div
+      className="contact"
+      initial={{ x: 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.3, ease: easeOut }}
+    >
       <div className="contact_map">
         <iframe
           id="map"
@@ -245,11 +246,9 @@ export const Contact = () => {
             />
           </div>
 
-          <ReCAPTCHA
-        sitekey={apikey}
-        onChange={onCaptchaChange}
-        hl="pl"
-      />
+          <div className="contact_forminfo_form_box">
+            <ReCAPTCHA sitekey={apikey} onChange={onCaptchaChange} hl="pl" />
+          </div>
 
           <button className="contact_forminfo_form_button" type="submit">
             Wyślij
