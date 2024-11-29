@@ -298,7 +298,7 @@ export const Quotation = () => {
 
     // *** OBRZEZA ok optymalizacja***
 
-    const circumcision = () => {
+    const edgeBanding = () => {
       // Pobieram dane wprowadzone przez uzytkownika w zabudowie dolnej
       const userBuildLowerLenght = Number(
         formData.zabudowaDolna["Długość zabudowy ( w centymetrach )"]
@@ -554,7 +554,7 @@ export const Quotation = () => {
             buildLower() +
             buildUpper() +
             frontsHigh() +
-            circumcision() +
+            edgeBanding() +
             countertop() +
             drawers() +
             lowCargo() +
