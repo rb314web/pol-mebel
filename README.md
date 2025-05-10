@@ -7,8 +7,6 @@
 - **HTML5** i **CSS3** — struktura i styl strony
 - **JavaScript** — interaktywność elementów
 - **SCSS** — organizacja i łatwa modyfikacja styli
-- **Swiper.js** — dynamiczne i responsywne karuzele zdjęć realizacji
-- **Formspree** (lub inna usługa) — obsługa formularza kontaktowego
 - **Responsive Design** — dopasowanie layoutu do urządzeń mobilnych i desktopowych
 
 ## 🎨 Kluczowe funkcje strony
